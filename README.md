@@ -5,7 +5,7 @@ Source: https://www.basketaki.com/teams/athens-pistols/results
 
 ## The website
 
-Open **`site/index.html`** (double-click it). It runs straight from this folder and works on phones too. Charts and fonts load from the internet, and everything else is local.
+**Live at https://gmantzoros.github.io/athens-pistols/**. It works on phones too. You can also open `site/index.html` straight from this folder.
 
 - **Overview:** record, season trends, leaders and highlights
 - **Games:** every game by margin, plus a searchable game log. Each game has its own page with the scoreboard, quarter charts, team comparison and both box scores
@@ -16,7 +16,13 @@ Open **`site/index.html`** (double-click it). It runs straight from this folder 
 
 ## Adding new games
 
-Double-click **`Update stats.bat`**. It downloads any new games from basketaki and refreshes `site/data.js`. Then reload the website. Either scraper can do this. The Python one is `python scrape_basketaki.py`.
+**Nothing to do: the live site updates itself.** Every morning at 06:15 UTC, GitHub runs the Python scraper (`.github/workflows/update-site.yml`). If basketaki has new games or stats, it saves them to this repository and republishes the site. Box scores that basketaki posts late are picked up on a later morning.
+
+- **Update right now:** on GitHub open the repository → **Actions** → **Update stats and publish site** → **Run workflow**. It takes a few minutes.
+- **Automatic data updates** show up in the history as commits by `github-actions[bot]`.
+- **Changing the site itself:** push the change to `main` and it republishes in about a minute.
+- **After a long break:** GitHub pauses scheduled jobs in repositories with no activity for 60 days, for example a summer with no games. If GitHub emails you about it, open **Actions** and click **Enable workflow**.
+- **Local copy:** `Update stats.bat` (or `python scrape_basketaki.py --out data`) still refreshes the files on your PC. You don't need to upload that output, since GitHub fetches the same data itself. If you do push changes from your PC, run `git pull` first.
 
 ## What's here
 
