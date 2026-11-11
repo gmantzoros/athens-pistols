@@ -16,7 +16,8 @@ Source: https://www.basketaki.com/teams/athens-pistols/results
   - quarter patterns, the matchup, the league table
   - a game plan for defence and offence
   Unconfirmed games show the opponent and what is known so far.
-- **Games:** every game by margin, plus a searchable game log. Each game has its own page with the scoreboard, quarter charts, team comparison and both box scores
+- **Games:** every game by margin, plus a searchable game log. Each game has its own page with the scoreboard, basketaki's photos, report and recap video, quarter charts, team comparison and both box scores
+- **Photos:** every game's pictures (from the 2023–24 season on), newest first and grouped by season. Tap one to flip through them full size
 - **Players:** roster cards and a leaderboard (per game, totals, per 40, shooting, advanced), plus a full profile for every player with per-game stats in wins vs losses, seasons, splits, record against each opponent, career highs, with/without, teammates, a percentile radar and the full game log
 - **Opponents:** head-to-head record against every team, each team's own page, and the opponent players who scored most against the Pistols
 - **Seasons**, **Team** (ratings, four factors, quarters, game situations, splits), **Records**, and **Compare** for up to 3 players side by side
@@ -27,7 +28,9 @@ Source: https://www.basketaki.com/teams/athens-pistols/results
 
 **Nothing to do: the live site updates itself.** Every morning at 06:15 UTC, GitHub runs the Python scraper (`.github/workflows/update-site.yml`). If basketaki has new games or stats, it saves them to this repository and republishes the site. Box scores that basketaki posts late are picked up on a later morning.
 
-The same run executes `scrape_upcoming.py`. It reads the schedule, the gyms and the league table, and for every confirmed game the opponent's current-season results and box scores. A newly confirmed game, or a new result for an opponent, changes `site/upcoming.js`, and the preview updates the same morning.
+The same run executes `scrape_media.py`. For every played game it reads basketaki's Gallery and Article tabs: it keeps the line-up photo, the winners photo and the MVP card as smaller copies in `site/media/`, plus the report's headline and first paragraph and the YouTube recap video, all listed in `site/media.js`. basketaki adds these a few days after a game, so each game is checked every morning for 21 days and then left alone.
+
+It also executes `scrape_upcoming.py`. It reads the schedule, the gyms and the league table, and for every confirmed game the opponent's current-season results and box scores. A newly confirmed game, or a new result for an opponent, changes `site/upcoming.js`, and the preview updates the same morning.
 
 - **Update right now:** on GitHub open the repository → **Actions** → **Update stats and publish site** → **Run workflow**. It takes a few minutes.
 - **Automatic data updates** show up in the history as commits by `github-actions[bot]`.
@@ -42,7 +45,8 @@ The same run executes `scrape_upcoming.py`. It reads the schedule, the gyms and 
 | `site/index.html` | The website (open this) |
 | `site/data.js`, `site/logo.png` | Website data (written by the scrapers) and team logo |
 | `site/upcoming.js`, `scrape_upcoming.py` | Upcoming games, league table and opponent scouting (current season), and the script that builds them |
-| `Update stats.bat` | One-click update: new games and website data |
+| `site/media.js`, `site/media/`, `scrape_media.py` | Game photos (480px previews and 1080px copies), report excerpts and recap videos from basketaki, and the script that collects them (needs Pillow: `python -m pip install pillow`) |
+| `Update stats.bat` | One-click update: new games, upcoming games, photos and website data |
 | `verify/` | Independent check of every number the website shows (see below) |
 | `data/games.csv` | **Final data.** One row per game (191 games) |
 | `data/player_stats.csv` | **Final data.** One row per player per game, both teams (2,533 lines) |

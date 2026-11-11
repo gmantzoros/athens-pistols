@@ -70,7 +70,7 @@ p{margin:0}
 .brand span{font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:.04em;text-transform:uppercase;color:var(--band-accent);line-height:1}
 .nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0;flex:1}
 .nav::-webkit-scrollbar{display:none}
-.nav a{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--band-muted);padding:17px 11px 15px;border-bottom:3px solid transparent;white-space:nowrap;text-decoration:none}
+.nav a{font-family:var(--font-display);font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase;color:var(--band-muted);padding:17px 8px 15px;border-bottom:3px solid transparent;white-space:nowrap;text-decoration:none}
 .nav a:hover{color:var(--band-fg)}
 .nav a[aria-current="page"]{color:var(--band-fg);border-bottom-color:var(--band-accent)}
 .filters{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding-block:10px;border-top:1px solid var(--band-line)}
@@ -158,7 +158,7 @@ main.gut{padding-block:26px 56px;display:grid;gap:18px}
 .kpis.k8{grid-template-columns:repeat(8,minmax(0,1fr))}
 @media (max-width:1180px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.kpis.k8{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:560px){.kpis,.kpis.k8{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .v{font-size:34px}}
-@media (max-width:1240px){.brandrow{flex-wrap:wrap;column-gap:14px;padding-top:10px}.brand{margin-right:auto}.nav{order:4;flex-basis:100%;margin-inline:-11px}}
+@media (max-width:1240px){.brandrow{flex-wrap:wrap;column-gap:14px;padding-top:10px}.brand{margin-right:auto}.nav{order:4;flex-basis:100%;margin-inline:-8px}}
 .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:6px;align-content:start}
 .kpi .l{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .kpi .v{font-family:var(--font-display);font-weight:800;font-size:40px;line-height:.9}
@@ -274,6 +274,55 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;
 .empty{padding:28px;text-align:center;color:var(--fg-2)}
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
 footer .gut{padding-block:20px 36px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+
+/* ---------- game media: photos, report, video, photo viewer */
+.media{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px;align-items:start}
+.media.wide{grid-template-columns:minmax(0,1fr) minmax(0,44%)}
+.media.novid{grid-template-columns:minmax(0,1fr)}
+.media-main{display:grid;gap:14px;min-width:0}
+.report{display:grid;gap:6px;max-width:80ch}
+.report-h{font:800 clamp(21px,2.4vw,26px)/1.1 var(--font-display);color:var(--fg);letter-spacing:.01em}
+.report p{color:var(--fg-2)}
+.report a{font-size:13.5px;font-weight:600;justify-self:start}
+.shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.shot{position:relative;display:block;width:100%;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:zoom-in;background:var(--surface-2);aspect-ratio:1;font:inherit}
+.shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.shot:hover img{transform:scale(1.04)}
+.shot span{position:absolute;left:8px;bottom:8px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,9,8,.66);color:#fff;padding:3px 7px;border-radius:5px;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vid{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#000;border:0;padding:0;cursor:pointer;font:inherit}
+.vid.wide{aspect-ratio:16/9}
+.vid img{width:100%;height:100%;object-fit:cover;display:block;opacity:.88;transition:opacity .2s}
+.vid:hover img{opacity:1}
+.vid .play{position:absolute;inset:0;display:grid;place-items:center}
+.vid .play i{width:62px;height:62px;border-radius:50%;background:var(--accent);display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.45);transition:transform .2s}
+.vid:hover .play i{transform:scale(1.08)}
+.vid .play svg{width:24px;height:24px;color:#170a02;margin-left:4px}
+.vid .cap{position:absolute;left:0;right:0;bottom:0;padding:28px 12px 11px;background:linear-gradient(transparent,rgba(0,0,0,.82));color:#fff;font-size:12.5px;font-weight:600;line-height:1.3;text-align:left}
+.vid .cap small{display:block;color:#d6cfc6;font-weight:500;font-size:11.5px;margin-top:2px}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.credit{font-size:12px;color:var(--muted)}
+@media (max-width:720px){.media,.media.wide{grid-template-columns:minmax(0,1fr)}.vid{justify-self:center;width:min(270px,100%)}.vid.wide{width:100%}}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px}
+.mcard{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:grid;align-content:start;min-width:0}
+.mcard .shot{border-radius:0}
+.mcard-b{display:grid;gap:3px;padding:10px 12px 12px;color:var(--fg);text-decoration:none;min-width:0}
+.mcard-b:hover{text-decoration:none;background:var(--accent-wash)}
+.mcard-b .d{font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
+.mcard-b b{font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.mcard-b .r{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2)}
+@media (max-width:560px){.mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mcard-b{padding:8px 9px 10px}.mcard-b .d{flex-wrap:wrap;gap:0 8px;font-size:11.5px}.mcard-b b{font-size:13.5px}.mcard .shot span{font-size:9.5px;left:6px;bottom:6px}}
+.lb{position:fixed;inset:0;z-index:60;background:rgba(8,7,6,.95);display:grid;grid-template-columns:64px minmax(0,1fr) 64px;align-items:center;padding:max(14px,env(safe-area-inset-top)) 6px max(14px,env(safe-area-inset-bottom));touch-action:pan-y}
+.lb figure{margin:0;display:grid;gap:10px;justify-items:center;min-width:0}
+.lb img{display:block;max-width:100%;max-height:calc(100vh - 130px);max-height:calc(100dvh - 130px);border-radius:8px;object-fit:contain;background:#151311}
+.lb figcaption{color:#ece6de;font-size:13.5px;text-align:center;display:grid;gap:3px;max-width:640px}
+.lb figcaption a{color:#ff9152;font-weight:600}
+.lb figcaption small{color:#a0978b;font-size:12px}
+.lb button{width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:#fff;cursor:pointer;display:grid;place-items:center;justify-self:center;padding:0}
+.lb button:hover{background:rgba(255,255,255,.18)}
+.lb button svg{width:20px;height:20px}
+.lb .lb-x{position:absolute;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right))}
+.lb button[disabled]{opacity:.25;cursor:default}
+@media (max-width:600px){.lb{grid-template-columns:40px minmax(0,1fr) 40px;padding-inline:2px}.lb button{width:36px;height:36px}}
 
 /* ---------- How it works (method page) */
 .doc{display:grid;grid-template-columns:232px minmax(0,1fr);gap:18px;align-items:start}
@@ -418,7 +467,7 @@ a.cal-day:hover{text-decoration:none;border-color:var(--accent)}
 .brand:hover img{transform:rotate(-8deg) scale(1.06)}
 .sb-logo{width:58px;height:58px;flex:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.finder{position:relative;flex:none;width:min(220px,30vw)}
+.finder{position:relative;flex:none;width:min(200px,30vw)}
 .tb-btns{display:flex;gap:6px;flex:none}
 a.iconbtn:hover{text-decoration:none}
 .iconbtn[aria-current="page"]{border-color:var(--band-accent);color:var(--band-accent)}
@@ -526,6 +575,7 @@ main.gut>*:nth-child(5){animation-delay:.16s} main.gut>*:nth-child(n+6){animatio
       <nav class="nav" aria-label="Sections">
         <a href="#overview" data-view="overview">Overview</a>
         <a href="#games" data-view="games">Games</a>
+        <a href="#photos" data-view="photos">Photos</a>
         <a href="#players" data-view="players">Players</a>
         <a href="#opponents" data-view="opponents">Opponents</a>
         <a href="#seasons" data-view="seasons">Seasons</a>
@@ -555,6 +605,7 @@ main.gut>*:nth-child(5){animation-delay:.16s} main.gut>*:nth-child(n+6){animatio
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="data.js" charset="utf-8"></script>
 <script src="upcoming.js" charset="utf-8" onerror="window.PISTOLS_UPCOMING = null"></script>
+<script src="media.js" charset="utf-8" onerror="window.PISTOLS_MEDIA = null"></script>
 <script>
 (function () {
 'use strict';
@@ -1355,6 +1406,7 @@ function vGame(arg) {
     ${hasQ ? `<div class="qt-wrap"><table class="qt"><thead><tr><th>Quarter</th>${qs.map(q => `<th>${q === 'ot' ? 'OT' : q.slice(1)}</th>`).join('')}<th>T</th></tr></thead><tbody>${qrow(esc(TEAM), 'team', 'opp')}${qrow(esc(g.opponent), 'opp', 'team')}</tbody></table></div>` : ''}
   </section>
   ${notes.map(n => `<p class="note warn">${esc(n)}</p>`).join('')}`;
+  html += mediaPanel(g);
   if (hasQ) html += `<div class="grid-2">${panel('Points by quarter', chart('c-gq', 'Points by quarter', chGameQuarters(g), 'short'))}${panel('Running score', chart('c-gr', 'Score after each quarter', chGameRunning(g), 'short'))}</div>`;
   if (b && b.both) html += panel('Team comparison', vsBars(b.usT, b.themT, TEAM, g.opponent), { sub: 'Totals from the box score. The better value is highlighted.' });
   if (b && b.us.length) { const c = boxCols(true); html += panel(`${esc(TEAM)} box score`, table('t-box-us', c, b.us, { sort: 'pts', desc: true, foot: footRow(c, b.usT, 'Team totals') })); }
@@ -2224,6 +2276,119 @@ function vMatch(arg) {
 }
 
 /* =====================================================================
+   Game media: photos, report and video from basketaki (site/media.js,
+   written by scrape_media.py). Photos are our own smaller copies.
+   ===================================================================== */
+const MEDIA = (window.PISTOLS_MEDIA && window.PISTOLS_MEDIA.games) || {};
+const mediaOf = g => (g && g.game_id && MEDIA[g.game_id]) || null;
+const photosOf = g => { const m = mediaOf(g); return (m && m.photos) || []; };
+const photoCap = (p, g) => p.kind === 'winners' ? (g.result === 'W' ? `Winners: ${TEAM}` : g.result === 'L' ? `Winners: ${g.opponent}` : 'Winners') : p.caption;
+const resultTxt = g => g.decided && isNum(g.team_score) ? ` · ${g.result === 'W' ? 'Won' : 'Lost'} ${g.team_score}–${g.opp_score}` : '';
+const ICON = {
+  play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 4.5v15l13-7.5z"/></svg>',
+  prev: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  next: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7.5 4.5 13 10l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  close: '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'
+};
+/* photo viewer groups, rebuilt on every render: data-lb="<group>|<index>" opens the viewer */
+let LBG = {};
+function lbGroup(items) { const id = 'g' + Object.keys(LBG).length; LBG[id] = items; return id; }
+const photoItem = (p, g, withLink) => ({ src: p.src, alt: `${photoCap(p, g)}, ${vsTxt(g)}, ${fdate(g.date, 1)}`,
+  cap: `<span><b>${esc(photoCap(p, g))}</b> · ${esc(vsTxt(g))} · ${fdate(g.date, 1)}${resultTxt(g)}</span>${withLink ? `<a href="#game-${g.rid}">Open the game: box score, report and video →</a>` : ''}` });
+function videoBox(v, g) {
+  return `<button type="button" class="vid${v.vertical === false ? ' wide' : ''}" data-yt="${esc(v.id)}" aria-label="Play the game recap video" title="${esc(v.title || 'Game recap')}">
+    <img src="https://i.ytimg.com/vi/${encodeURIComponent(v.id)}/hqdefault.jpg" alt="" loading="lazy"><span class="play"><i>${ICON.play}</i></span>
+    <span class="cap">Game recap<small>${fdate(g.date, 1)} · plays from YouTube</small></span></button>`;
+}
+function mediaPanel(g) {
+  const m = mediaOf(g); if (!m) return '';
+  const ph = m.photos || [];
+  if (!ph.length && !m.video && !m.headline) return '';
+  const grp = ph.length ? lbGroup(ph.map(p => photoItem(p, g, false))) : '';
+  const report = m.headline ? `<div class="report"><p class="eyebrow" style="margin:0">Game report</p><p class="report-h">${esc(m.headline)}</p>${m.excerpt ? `<p>${esc(m.excerpt)}</p>` : ''}${m.article ? `<a href="${esc(m.article)}" target="_blank" rel="noopener">${m.excerpt ? 'Read the full report on basketaki' : 'This game on basketaki'} ↗</a>` : ''}</div>` : '';
+  const shots = ph.length ? `<div class="shots">${ph.map((p, i) => `<button type="button" class="shot" data-lb="${grp}|${i}" aria-label="Open photo: ${esc(photoCap(p, g))}"><img src="${esc(p.thumb)}" alt="" loading="lazy" width="480" height="480"><span>${esc(photoCap(p, g))}</span></button>`).join('')}</div>` : '';
+  const vid = m.video ? videoBox(m.video, g) : '';
+  const credit = ph.length ? `Photos, report and video by <a href="https://www.basketaki.com/games/${encodeURIComponent(g.game_id)}/gallery" target="_blank" rel="noopener">basketaki.com</a>. Tap a photo to see it full size.` : 'Report and video by basketaki.com.';
+  return panel('Photos and video', `<div class="media${vid ? (m.video.vertical === false ? ' wide' : '') : ' novid'}"><div class="media-main">${report}${shots}</div>${vid}</div><p class="credit">${credit}</p>`);
+}
+
+/* =====================================================================
+   VIEW: Photos (every game with photos, newest first, grouped by season)
+   ===================================================================== */
+function vPhotos() {
+  const all = fGames(), games = all.filter(g => photosOf(g).length).reverse();
+  const nPh = games.reduce((t, g) => t + photosOf(g).length, 0);
+  const nVid = all.filter(g => { const m = mediaOf(g); return m && m.video; }).length;
+  const about = 'basketaki publishes photos of every game from the 2023–24 season on, and a recap video from 2026–27.';
+  if (!games.length) return `${head('<h1>Photos</h1>', esc(filterNote()))}<div class="panel empty"><p>No photos for the games in the current filters. ${about}</p></div>`;
+  const items = [], first = new Map();
+  for (const g of games) { first.set(g, items.length); for (const p of photosOf(g)) items.push(photoItem(p, g, true)); }
+  const grp = lbGroup(items);
+  const card = g => {
+    const ph = photosOf(g), m = mediaOf(g), cover = ph.find(p => p.kind === 'start') || ph[0];
+    return `<article class="mcard"><button type="button" class="shot" data-lb="${grp}|${first.get(g) + ph.indexOf(cover)}" aria-label="Photos of ${esc(vsTxt(g))}, ${fdate(g.date, 1)}"><img src="${esc(cover.thumb)}" alt="" loading="lazy" width="480" height="480"><span>${plural(ph.length, 'photo')}${m.video ? ' · video' : ''}</span></button>
+      <a class="mcard-b" href="#game-${g.rid}"><span class="d"><span>${fdate(g.date, 1)}</span><span>${esc(g.ci.short)}</span></span><b>${esc(vsTxt(g))}</b><span class="r">${resBadge(g)} ${scoreTxt(g)}</span></a></article>`;
+  };
+  const seasons = [...new Set(games.map(g => g.season))];
+  return `${head('<h1>Photos</h1>', `${plural(games.length, 'game')} · ${plural(nPh, 'photo')} · ${plural(nVid, 'recap video')} · ${esc(filterNote())}`)}
+  <p class="note">${about} Tap a picture to flip through all of them; the game link opens the box score, the report and the video. Photos, reports and videos by <a href="https://www.basketaki.com" target="_blank" rel="noopener">basketaki.com</a>.</p>
+  ${seasons.map(s => { const gs = games.filter(g => g.season === s); return panel(esc(seasonLabel(s)), `<div class="mgrid">${gs.map(card).join('')}</div>`, { sub: plural(gs.length, 'game') }); }).join('')}`;
+}
+
+/* ---------- photo viewer (one overlay for the whole site) */
+const LB = { el: null, img: null, cap: null, list: [], i: 0, opener: null, x0: null, swiped: false };
+function lbInit() {
+  const d = document.createElement('div');
+  d.className = 'lb'; d.hidden = true;
+  d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-label', 'Photo viewer');
+  d.innerHTML = `<button type="button" class="lb-prev" aria-label="Previous photo">${ICON.prev}</button><figure><img alt=""><figcaption></figcaption></figure><button type="button" class="lb-next" aria-label="Next photo">${ICON.next}</button><button type="button" class="lb-x" aria-label="Close the photo viewer">${ICON.close}</button>`;
+  document.body.appendChild(d);
+  Object.assign(LB, { el: d, img: d.querySelector('img'), cap: d.querySelector('figcaption') });
+  d.addEventListener('click', e => {
+    if (LB.swiped) { LB.swiped = false; return; }
+    if (e.target.closest('.lb-x') || e.target === d) lbClose();
+    else if (e.target.closest('.lb-prev')) lbGo(-1);
+    else if (e.target.closest('.lb-next')) lbGo(1);
+    else if (e.target.closest('figcaption a')) lbClose(true);
+  });
+  d.addEventListener('pointerdown', e => { LB.x0 = e.clientX; });
+  d.addEventListener('pointerup', e => { if (LB.x0 != null && Math.abs(e.clientX - LB.x0) > 50 && !e.target.closest('button,a')) { LB.swiped = true; lbGo(e.clientX < LB.x0 ? 1 : -1); } LB.x0 = null; });
+  document.addEventListener('keydown', e => {
+    if (LB.el.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); lbClose(); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); lbGo(-1); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); lbGo(1); }
+    else if (e.key === 'Tab') {   // keep keyboard focus inside the viewer
+      const f = [...LB.el.querySelectorAll('button:not([disabled]),a[href]')]; if (!f.length) return;
+      const k = f.indexOf(document.activeElement), n = e.shiftKey ? k - 1 : k + 1;
+      e.preventDefault(); f[(n + f.length) % f.length].focus();
+    }
+    e.stopPropagation();
+  }, true);
+}
+function lbShow() {
+  const it = LB.list[LB.i], n = LB.list.length;
+  LB.img.src = it.src; LB.img.alt = it.alt;
+  LB.cap.innerHTML = `${it.cap}<small>${LB.i + 1} of ${n}</small>`;
+  LB.el.querySelector('.lb-prev').disabled = LB.i === 0;
+  LB.el.querySelector('.lb-next').disabled = LB.i === n - 1;
+  for (const j of [LB.i - 1, LB.i + 1]) if (LB.list[j]) { const im = new Image(); im.src = LB.list[j].src; }
+}
+function lbOpen(list, i, opener) {
+  if (!list || !list.length) return;
+  if (!LB.el) lbInit();
+  Object.assign(LB, { list, i: Math.max(0, Math.min(list.length - 1, i)), opener });
+  LB.el.hidden = false; document.documentElement.style.overflow = 'hidden';
+  lbShow(); LB.el.querySelector('.lb-x').focus();
+}
+function lbGo(d) { const j = LB.i + d; if (j < 0 || j >= LB.list.length) return; LB.i = j; lbShow(); }
+function lbClose(noFocus) {
+  if (!LB.el || LB.el.hidden) return;
+  LB.el.hidden = true; document.documentElement.style.overflow = ''; LB.img.removeAttribute('src');
+  if (!noFocus && LB.opener && document.contains(LB.opener)) LB.opener.focus();
+}
+
+/* =====================================================================
    VIEW: How it works. Every calculation and assumption, with numbers
    computed from the current data (they update with every new game).
    ===================================================================== */
@@ -2231,7 +2396,7 @@ const METHOD_TOC = [
   ['data', 'Where the data comes from'], ['games', 'Which games count'], ['basic', 'Basic stats and shooting'],
   ['poss', 'Possessions and team ratings'], ['adv', 'Advanced player stats'], ['min', 'Minimums and percentiles'],
   ['records', 'Records, streaks, situations'], ['filters', 'Filters'], ['upcoming', 'Upcoming games'],
-  ['scout', 'Scouting and game plan'], ['names', 'Names, seasons, labels'], ['limits', 'Limitations'], ['check', 'How the numbers were checked']
+  ['scout', 'Scouting and game plan'], ['media', 'Photos, reports, videos'], ['names', 'Names, seasons, labels'], ['limits', 'Limitations'], ['check', 'How the numbers were checked']
 ];
 const HOW_CALC = {
   pace: '(their poss. + opponents’ poss.) ÷ 2 ÷ games', ortg: '100 × PTS ÷ poss.', drtg: '100 × opponents’ PTS ÷ opponents’ poss.',
@@ -2264,6 +2429,9 @@ function vMethod() {
   const all = teamAgg(GAMES), amin = autoMin(GAMES), nBox = boxGames(GAMES).length;
   const ex = full[full.length - 1], eb = ex ? boxOf(ex) : null;
   const nx = nextConfirmed(), S = nx ? SCOUT[nx.opponent_id] : null, sctx = S ? scoutContext(S) : null;
+  const withPh = GAMES.filter(g => photosOf(g).length), nPhotos = withPh.reduce((t, g) => t + photosOf(g).length, 0);
+  const nVideo = GAMES.filter(g => (mediaOf(g) || {}).video).length, nReport = GAMES.filter(g => (mediaOf(g) || {}).headline).length;
+  const recheck = (window.PISTOLS_MEDIA && window.PISTOLS_MEDIA.recheck_days) || 21;
 
   // worked possessions example (latest game with complete box scores for both teams)
   let example = '';
@@ -2472,6 +2640,18 @@ function vMethod() {
       ])}
       <p><b>The other panels.</b> The matchup compares both teams’ complete box scores this season (the better value is highlighted). Quarter by quarter averages their points scored and allowed in each quarter. Their games this season lists every game with their top scorer.</p>`),
 
+    sec('media', 'Photos, reports, videos', `
+      <p>Each game page shows basketaki’s photos, the start of its game report and the recap video, and the Photos page collects every picture. They come from each game’s <b>Gallery</b> and <b>Article</b> tabs on basketaki.com, read by the same morning update as the stats.</p>
+      ${defs([
+        ['What there is', `Right now: ${L(plural(withPh.length, 'game'))} with photos (${L(plural(nPhotos, 'photo'))}${withPh.length ? `, the first from ${fdate(withPh[0].date, 1)}` : ''}), ${L(plural(nReport, 'game report'))} and ${L(plural(nVideo, 'recap video'))}. basketaki publishes photos from the 2023–24 season on, recap videos from 2026–27, and written reports for games back to 2019.`],
+        ['Which pictures', 'The line-up photo before tip-off, the winning team’s photo (whichever team won) and the MVP card. The stats card is skipped because the site already shows those stats, and so is the half-time card that only some games have.'],
+        ['Stored copies', 'Each picture is saved with the site as a 1080-pixel copy (about 180 KB) and a 480-pixel preview (about 45 KB). The originals are 1–2.5 MB each and are not kept. Smaller copies keep pages fast on a phone, and the pictures stay on the site even if basketaki removes them.'],
+        ['When they appear', `basketaki adds photos, reports and videos a few days after a game, so every game is checked again each morning for ${L(recheck)} days after it is played and then left alone.`],
+        ['Reports', 'The headline and the first paragraph (about 320 characters), with a link to the full report on basketaki. The reports are basketaki’s articles, so the site doesn’t copy them in full. They are in Greek, as basketaki writes them.'],
+        ['Videos', 'basketaki’s game recap from the Basketaki The League channel on YouTube. The page shows YouTube’s preview picture, and the YouTube player only loads when you press play (in YouTube’s privacy-enhanced mode).'],
+        ['Facebook', 'basketaki also posts these pictures on its Facebook page, tagged #AthensPistols. Facebook doesn’t let a site read another organisation’s page automatically, so everything comes from basketaki.com, matched to each game by its id rather than guessed from post dates.']
+      ])}`),
+
     sec('names', 'Names, seasons, labels', ul([
       'Players and opponents are matched by their basketaki id, not by name, so a spelling change doesn’t split one player into two. An opponent that renamed itself shows its latest name.',
       'basketaki writes Greek names as surname, an initial, then first name. The site shows first name and surname and drops the initial.',
@@ -2506,7 +2686,7 @@ function vMethod() {
   <div class="doc">${toc}<div class="doc-body">${body}</div></div>`;
 }
 
-const VIEWS = { overview: vOverview, games: vGames, game: vGame, players: vPlayers, player: vPlayer, opponents: vOpponents, opponent: vOpponent, seasons: vSeasons, season: vSeason, team: vTeam, records: vRecords, compare: vCompare, match: vMatch, method: vMethod };
+const VIEWS = { overview: vOverview, games: vGames, game: vGame, players: vPlayers, player: vPlayer, opponents: vOpponents, opponent: vOpponent, seasons: vSeasons, season: vSeason, team: vTeam, records: vRecords, compare: vCompare, match: vMatch, method: vMethod, photos: vPhotos };
 const NAV_OF = { game: 'games', player: 'players', opponent: 'opponents', season: 'seasons', match: 'overview' };
 function route() {
   let h = location.hash.slice(1); try { h = decodeURIComponent(h); } catch (e) { /* keep raw */ }
@@ -2515,7 +2695,7 @@ function route() {
   return { view: VIEWS[h] ? h : 'overview' };
 }
 let lastHash = null, lastView = null;
-const NAV_LABEL = { overview: 'Overview', games: 'Games', players: 'Players', opponents: 'Opponents', seasons: 'Seasons', team: 'Team analytics', records: 'Records', compare: 'Compare players', method: 'How it works' };
+const NAV_LABEL = { overview: 'Overview', games: 'Games', players: 'Players', opponents: 'Opponents', seasons: 'Seasons', team: 'Team analytics', records: 'Records', compare: 'Compare players', photos: 'Photos', method: 'How it works' };
 function titleFor(r) {
   if (r.view === 'game') { const g = GBYRID.get(r.arg); return g ? `${fdate(g.date)} ${vsTxt(g)}` : ''; }
   if (r.view === 'player') { const p = PLBYRID.get(r.arg); return p ? p.disp : ''; }
@@ -2561,6 +2741,7 @@ function countUp() {
 function render(keep, anim) {
   const r = route(), y = window.scrollY;
   destroyCharts(); for (const k in TABLES) delete TABLES[k];
+  LBG = {}; lbClose(true);
   let html;
   try { html = VIEWS[r.view](r.arg); } catch (e) { console.error(e); html = `<div class="panel empty"><h2>Something went wrong</h2><p>${esc(e.message)}</p></div>`; }
   app.innerHTML = html;
@@ -2581,6 +2762,14 @@ function render(keep, anim) {
   if (anim) countUp();
 }
 app.addEventListener('click', e => {
+  const lbt = e.target.closest('[data-lb]');
+  if (lbt) { const [gid, i] = lbt.dataset.lb.split('|'); lbOpen(LBG[gid], +i, lbt); return; }
+  const yt = e.target.closest('[data-yt]');
+  if (yt) {   // swap the preview for YouTube's player only when asked (privacy-enhanced mode)
+    const box = document.createElement('div'); box.className = yt.className;
+    box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(yt.dataset.yt)}?autoplay=1&rel=0&playsinline=1" title="Game recap video" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    yt.replaceWith(box); return;
+  }
   const cb = e.target.closest('[data-cal]');
   if (cb) { calMonth = cb.dataset.cal; render(true); return; }
   const sb = e.target.closest('[data-sort]');

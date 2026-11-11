@@ -2,6 +2,7 @@
 #  - every morning it scrapes basketaki for new games (Python scraper, standard library only)
 #  - it also reads the schedule: upcoming games, gyms, league table and, for confirmed games,
 #    the opponent's current season (scouting for the match preview)
+#  - and each recent game's photos, report and recap video (smaller photo copies go in site/media/)
 #  - if anything changed it saves the new data to the repository
 #  - then it publishes the site/ folder to GitHub Pages
 # It also publishes whenever you push a change, and you can run it any time from the
@@ -37,6 +38,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install Pillow (resizes the game photos)
+        run: python -m pip install --quiet pillow
+
       - name: Reuse pages downloaded on earlier runs
         uses: actions/cache@v4
         with:
@@ -50,14 +54,17 @@ jobs:
       - name: Upcoming games, league table and scouting of confirmed opponents
         run: python scrape_upcoming.py
 
-      - name: Save new data (only when games, stats or upcoming games changed)
+      - name: Game photos, reports and recap videos
+        run: python scrape_media.py
+
+      - name: Save new data (only when games, stats, upcoming games or game media changed)
         run: |
-          if git diff --quiet -- data/games.csv data/player_stats.csv site/upcoming.js; then
-            echo "No new games, stat changes or schedule changes."
+          if git diff --quiet -- data/games.csv data/player_stats.csv site/upcoming.js site/media.js; then
+            echo "No new games, stat changes, schedule changes or game media."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/games.csv data/player_stats.csv data/stats.json site/data.js site/upcoming.js
+            git add data/games.csv data/player_stats.csv data/stats.json site/data.js site/upcoming.js site/media.js site/media
             git commit -m "Update stats $(date -u +%Y-%m-%d)"
             git push
           fi
