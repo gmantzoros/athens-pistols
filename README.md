@@ -21,6 +21,7 @@ Source: https://www.basketaki.com/teams/athens-pistols/results
 - **Opponents:** head-to-head record against every team, each team's own page, and the opponent players who scored most against the Pistols
 - **Seasons**, **Team** (ratings, four factors, quarters, game situations, splits), **Records**, and **Compare** for up to 3 players side by side
 - **Filters** at the top (season, competition, opponent, home/away, wins/losses, forfeits on/off) apply to every page. Press `/` to find any player, team or season.
+- **How it works** (the `?` button at the top, or the footer link): every calculation and assumption on the site, with a worked possessions example, the scouting thresholds and the exact advice rules. Its numbers are computed from the current data, so it stays up to date by itself.
 
 ## Adding new games
 

@@ -20,6 +20,7 @@
   --s-us:#e8672c; --s-us-wash:rgba(232,103,44,.14); --s-them:#d9d3ca; --s-loss:#5c554e; --s-2:#3987e5; --s-3:#199e70;
   --font-display:'Sofia Sans Extra Condensed','Arial Narrow','Roboto Condensed',sans-serif;
   --font-body:'Commissioner',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'Cascadia Mono',Consolas,'SF Mono',Menlo,monospace;
   --r:12px;
 }
 @media (prefers-color-scheme: light){
@@ -157,7 +158,7 @@ main.gut{padding-block:26px 56px;display:grid;gap:18px}
 .kpis.k8{grid-template-columns:repeat(8,minmax(0,1fr))}
 @media (max-width:1180px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.kpis.k8{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media (max-width:560px){.kpis,.kpis.k8{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .v{font-size:34px}}
-@media (max-width:1100px){.brandrow{flex-wrap:wrap;column-gap:14px;padding-top:10px}.brand{margin-right:auto}.nav{order:4;flex-basis:100%;margin-inline:-11px}}
+@media (max-width:1240px){.brandrow{flex-wrap:wrap;column-gap:14px;padding-top:10px}.brand{margin-right:auto}.nav{order:4;flex-basis:100%;margin-inline:-11px}}
 .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:grid;gap:6px;align-content:start}
 .kpi .l{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .kpi .v{font-family:var(--font-display);font-weight:800;font-size:40px;line-height:.9}
@@ -274,6 +275,38 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
 footer .gut{padding-block:20px 36px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
 
+/* ---------- How it works (method page) */
+.doc{display:grid;grid-template-columns:232px minmax(0,1fr);gap:18px;align-items:start}
+.doc-toc{position:sticky;top:calc(var(--tb,64px) + 14px);display:grid;gap:1px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;max-height:calc(100vh - var(--tb,64px) - 28px);overflow:auto}
+.doc-toc .eyebrow{margin:2px 8px 6px}
+.doc-toc a{display:flex;gap:8px;padding:6px 8px;border-radius:6px;font-size:13.5px;line-height:1.3;color:var(--fg-2);text-decoration:none}
+.doc-toc a span{color:var(--muted);font-variant-numeric:tabular-nums;min-width:16px}
+.doc-toc a:hover{background:var(--surface-2);color:var(--fg)}
+.doc-toc a.on{background:var(--accent-wash);color:var(--accent-text)}
+.doc-toc a.on span{color:inherit}
+.doc-body{display:grid;gap:18px;min-width:0}
+.doc-sec{gap:12px}
+.doc-sec>p,.doc-sec li{color:var(--fg-2);max-width:80ch}
+.doc-sec b{color:var(--fg)}
+.doc-sec h3{font-size:18px;letter-spacing:.04em;margin-top:6px}
+.doc-sec .tbl-wrap{max-width:100%}
+.doc-sec .tbl td{white-space:normal;min-width:90px}
+.doc-sec .tbl td.nw{white-space:nowrap;min-width:0}
+.doc-list{margin:0;padding-left:20px;display:grid;gap:7px}
+.doc-list li::marker{color:var(--accent-text)}
+.formula{font-family:var(--font-mono);font-size:13.5px;line-height:1.55;background:var(--surface-2);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 14px;color:var(--fg);overflow-x:auto;white-space:pre-wrap}
+.formula small{display:block;font-family:var(--font-body);font-size:12.5px;color:var(--muted);margin-top:2px}
+code{font-family:var(--font-mono);font-size:.9em;background:var(--surface-2);border:1px solid var(--line);border-radius:5px;padding:1px 5px;color:var(--fg);overflow-wrap:anywhere}
+.defs{display:grid;grid-template-columns:minmax(120px,190px) minmax(0,1fr);margin:0;border-top:1px solid var(--line)}
+.defs dt,.defs dd{margin:0;padding:10px 0;border-bottom:1px solid var(--line)}
+.defs dt{font-weight:700;padding-right:16px;color:var(--fg)}
+.defs dd{color:var(--fg-2);min-width:0}
+.defs code.fx{display:block;width:fit-content;max-width:100%;margin-bottom:5px}
+.live{color:var(--accent-text);font-weight:700;font-variant-numeric:tabular-nums}
+.doc-intro{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:900px){.doc{grid-template-columns:1fr}.doc-toc{position:static;max-height:none;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr))}.doc-toc .eyebrow{grid-column:1/-1}}
+@media (max-width:560px){.defs{grid-template-columns:1fr}.defs dt{border-bottom:0;padding-bottom:0}}
+
 /* ---------- upcoming games: calendar, next game, match preview */
 .up-top{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;align-items:stretch}
 .uptiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:8px}
@@ -385,7 +418,10 @@ a.cal-day:hover{text-decoration:none;border-color:var(--accent)}
 .brand:hover img{transform:rotate(-8deg) scale(1.06)}
 .sb-logo{width:58px;height:58px;flex:none}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-.finder{position:relative;flex:none;width:min(250px,30vw)}
+.finder{position:relative;flex:none;width:min(220px,30vw)}
+.tb-btns{display:flex;gap:6px;flex:none}
+a.iconbtn:hover{text-decoration:none}
+.iconbtn[aria-current="page"]{border-color:var(--band-accent);color:var(--band-accent)}
 .finder input{width:100%;height:36px;border-radius:9px;border:1px solid var(--band-line);background:var(--band-2);color:var(--band-fg);padding:0 36px 0 34px;font:inherit;font-size:13.5px;transition:border-color .15s,box-shadow .15s}
 .finder input:focus{outline:none;border-color:var(--band-accent);box-shadow:0 0 0 3px rgba(255,122,47,.22)}
 .finder input::placeholder{color:var(--band-muted)}
@@ -504,7 +540,10 @@ main.gut>*:nth-child(5){animation-delay:.16s} main.gut>*:nth-child(n+6){animatio
         <kbd>/</kbd>
         <div class="finder-res" id="finder-res" role="listbox" hidden></div>
       </div>
-      <button type="button" class="iconbtn" id="theme-btn" aria-label="Theme: system"></button>
+      <div class="tb-btns">
+        <a class="iconbtn" id="help-btn" href="#method" aria-label="How it works" title="How it works: every calculation and assumption"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M7.6 7.6a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="10" cy="14.6" r="1.1" fill="currentColor"/></svg></a>
+        <button type="button" class="iconbtn" id="theme-btn" aria-label="Theme: system"></button>
+      </div>
     </div>
     <div class="filters" id="filters" aria-label="Filters"></div>
   </div>
@@ -896,6 +935,7 @@ const GLOSSARY = `<div class="glossary">
 <p><b>Per 40</b> Stats scaled to a full 40-minute game.</p>
 <p><b>DD / TD</b> Double-double / triple-double: 10+ in two / three of points, rebounds, assists, steals, blocks.</p>
 <p><b>+/− team</b> The team's average final margin in games the player played. No lineup data exists, so this is not a true on-court plus-minus.</p>
+<p><a href="#method-adv">Every formula and assumption: How it works →</a></p>
 </div>`;
 const TEAM_GLOSSARY = `<div class="glossary">
 <p><b>Possessions</b> Estimated as FGA + 0.44 × FTA − OREB + TOV.</p>
@@ -903,6 +943,7 @@ const TEAM_GLOSSARY = `<div class="glossary">
 <p><b>Pace</b> Possessions per 40-minute game.</p>
 <p><b>Four factors</b> The four things that decide games, for both teams: shooting (eFG%), turnovers (TOV%), offensive rebounding (ORB%) and getting to the line (FT rate = FTM ÷ FGA).</p>
 <p>Box-score metrics use only games where both teams' box scores are complete on basketaki. Points, records and margins use every game.</p>
+<p><a href="#method-poss">Worked example and every assumption: How it works →</a></p>
 </div>`;
 
 /* =====================================================================
@@ -2178,20 +2219,303 @@ function vMatch(arg) {
     { k: 'top', label: 'Top scorer', cls: 'txt', v: x => { const b = S.bx(x); return b && b.us.length ? Math.max.apply(null, b.us.map(l => l.pts)) : null; }, html: x => { const b = S.bx(x); if (!b || !b.us.length) return `<span class="muted">${NA}</span>`; const l = b.us.reduce((m, y) => (y.pts > m.pts ? y : m), b.us[0]); return `${esc(short(l.player))} <b>${l.pts}</b>`; } }
   ];
   html += panel('Their games this season', table('t-scout-games', gcols, S.games.slice().reverse(), { sort: 'date', desc: true }), { sub: 'Dates link to the game on basketaki. Score shows their points first.' });
-  html += `<p class="small muted">Automatic analysis of basketaki box scores, refreshed every morning. It only covers ${esc(S.team)}'s ${esc(seasonLabel(S.season))} season; small samples early in the season can swing a lot.</p>`;
+  html += `<p class="small muted">Automatic analysis of basketaki box scores, refreshed every morning. It only covers ${esc(S.team)}'s ${esc(seasonLabel(S.season))} season; small samples early in the season can swing a lot. <a href="#method-scout">How the game plan is worked out →</a></p>`;
   return html;
 }
 
-const VIEWS = { overview: vOverview, games: vGames, game: vGame, players: vPlayers, player: vPlayer, opponents: vOpponents, opponent: vOpponent, seasons: vSeasons, season: vSeason, team: vTeam, records: vRecords, compare: vCompare, match: vMatch };
+/* =====================================================================
+   VIEW: How it works. Every calculation and assumption, with numbers
+   computed from the current data (they update with every new game).
+   ===================================================================== */
+const METHOD_TOC = [
+  ['data', 'Where the data comes from'], ['games', 'Which games count'], ['basic', 'Basic stats and shooting'],
+  ['poss', 'Possessions and team ratings'], ['adv', 'Advanced player stats'], ['min', 'Minimums and percentiles'],
+  ['records', 'Records, streaks, situations'], ['filters', 'Filters'], ['upcoming', 'Upcoming games'],
+  ['scout', 'Scouting and game plan'], ['names', 'Names, seasons, labels'], ['limits', 'Limitations'], ['check', 'How the numbers were checked']
+];
+const HOW_CALC = {
+  pace: '(their poss. + opponents’ poss.) ÷ 2 ÷ games', ortg: '100 × PTS ÷ poss.', drtg: '100 × opponents’ PTS ÷ opponents’ poss.',
+  efg: '(FGM + 0.5 × 3PM) ÷ FGA', p2: '2PM ÷ 2PA', tpar: '3PA ÷ FGA', p3: '3PM ÷ 3PA', ftr: '100 × FTA ÷ FGA', ftp: 'FTM ÷ FTA',
+  tovp: '100 × TOV ÷ (FGA + 0.44 × FTA + TOV)', orb: 'OREB ÷ (OREB + opponents’ DREB)', drb: 'DREB ÷ (DREB + opponents’ OREB)', astr: 'AST ÷ FGM',
+  oefg: 'opponents’ (FGM + 0.5 × 3PM) ÷ FGA', otov: '100 × opponents’ TOV ÷ their plays', stl: 'STL ÷ games', blk: 'BLK ÷ games'
+};
+function vMethod() {
+  const L = v => `<span class="live">${v}</span>`;
+  const sec = (id, title, body) => { const i = METHOD_TOC.findIndex(x => x[0] === id); return `<section class="panel doc-sec" id="m-${id}"><h2>${i + 1}. ${title}</h2>${body}</section>`; };
+  const fm = (s, note) => `<div class="formula">${s}${note ? `<small>${note}</small>` : ''}</div>`;
+  const ul = items => `<ul class="doc-list">${items.filter(Boolean).map(x => `<li>${x}</li>`).join('')}</ul>`;
+  const ol = items => `<ol class="doc-list">${items.map(x => `<li>${x}</li>`).join('')}</ol>`;
+  const defs = rows => `<dl class="defs">${rows.filter(Boolean).map(([t, d]) => `<dt>${t}</dt><dd>${d}</dd>`).join('')}</dl>`;
+  const C = s => `<code>${s}</code>`;
+  const F = s => `<code class="fx">${s}</code>`; // a formula on its own line, the explanation below it
+
+  // live numbers
+  const first = GAMES[0], dec = GAMES.filter(g => g.decided), real = GAMES.filter(g => g.real);
+  const ffW = GAMES.filter(g => g.forfeit && g.result === 'W').length, ffL = GAMES.filter(g => g.forfeit && g.result === 'L').length;
+  const noRes = GAMES.length - dec.length;
+  const withBox = real.filter(g => { const b = boxOf(g); return b && b.us.length; });
+  const full = real.filter(g => { const b = boxOf(g); return b && b.full; });
+  const partial = withBox.length - full.length, noBox = real.length - withBox.length;
+  const mins = withBox.map(g => boxOf(g).usT.min).sort((a, b) => a - b), medMin = mins.length ? mins[Math.floor(mins.length / 2)] : null;
+  const effMiss = LINES.filter(l => l.pts + l.reb + l.ast + l.stl + l.blk - (l.fga - l.fgm) - (l.fta - l.ftm) - l.tov !== l.eff);
+  const missBy = {}; for (const l of effMiss) missBy[l.g.season] = (missBy[l.g.season] || 0) + 1;
+  const missTop = Object.entries(missBy).sort((a, b) => b[1] - a[1])[0];
+  const tmrN = LINES.filter(l => +l.tmr > 0).length;
+  const all = teamAgg(GAMES), amin = autoMin(GAMES), nBox = boxGames(GAMES).length;
+  const ex = full[full.length - 1], eb = ex ? boxOf(ex) : null;
+  const nx = nextConfirmed(), S = nx ? SCOUT[nx.opponent_id] : null, sctx = S ? scoutContext(S) : null;
+
+  // worked possessions example (latest game with complete box scores for both teams)
+  let example = '';
+  if (eb) {
+    const pu = poss(eb.usT), po = poss(eb.themT);
+    const row = (name, T, p) => `<tr><td class="txt nw">${esc(name)}</td><td>${T.fga}</td><td>${T.fta}</td><td>${T.oreb}</td><td>${T.tov}</td><td class="strong">${f1(p)}</td><td>${T.pts}</td><td class="strong">${f1(100 * T.pts / p)}</td></tr>`;
+    const line = (name, T, p) => `${esc(name)}: ${T.fga} + 0.44 × ${T.fta} − ${T.oreb} + ${T.tov} = ${f1(p)} possessions → 100 × ${T.pts} ÷ ${f1(p)} = ${f1(100 * T.pts / p)} per 100`;
+    example = `<h3>Worked example</h3>
+      <p>The latest game with complete box scores for both teams: ${gameLink(ex, `${esc(vsTxt(ex))}, ${fdate(ex.date, 1)}`)} (${ex.team_score}–${ex.opp_score}).</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th class="txt">Team</th><th>FGA</th><th>FTA</th><th>OREB</th><th>TOV</th><th>Possessions</th><th>Points</th><th>Per 100 poss.</th></tr></thead>
+      <tbody>${row(TEAM, eb.usT, pu)}${row(ex.opponent, eb.themT, po)}</tbody></table></div>
+      ${fm(`${line(TEAM, eb.usT, pu)}\n${line(ex.opponent, eb.themT, po)}\nPace: (${f1(pu)} + ${f1(po)}) ÷ 2 = ${f1((pu + po) / 2)} possessions`, `So in this game the ${esc(TEAM)} offensive rating was ${f1(100 * eb.usT.pts / pu)} and the defensive rating ${f1(100 * eb.themT.pts / po)}.`)}`;
+  }
+
+  // scouting tables
+  const UNIT = { pace: ' possessions a game', ortg: ' points per 100 possessions', drtg: ' points per 100 possessions', ftr: ' per 100 shots', tovp: ' per 100 plays', otov: ' per 100 plays', stl: ' a game', blk: ' a game' };
+  const thrTxt = h => { const t = h.thr * SIG; if (h.fmt === fp) return `${+(t * 100).toFixed(2)} percentage points`; return `${+(['ftr', 'tovp', 'otov'].includes(h.k) ? t * 100 : t).toFixed(2)}${UNIT[h.k] || ''}`; };
+  const howRows = HOWTO.map(h => `<tr><td class="txt">${esc(h.lab)}</td><td class="txt">${C(HOW_CALC[h.k] || '')}</td><td class="txt nw">${h.good === 1 ? 'Higher' : h.good === -1 ? 'Lower' : 'Style (High / Low)'}</td><td class="txt">${thrTxt(h)}</td></tr>`).join('');
+  const X = '<i class="muted">[value]</i>';
+  const KEYS = [
+    ['3-point accuracy', `Close out on shooters: ${X} from three.`, `Let them shoot threes: ${X} from deep on ${X} of their shots. Protect the paint. <span class="muted">(when they take at least 3 percentage points more of their shots from three than the league; otherwise:)</span> Sag off their shooters: ${X} from three.`],
+    ['2-point accuracy', `Wall up the paint: ${X} on twos.`, `Make them finish inside: ${X} on twos.`],
+    ['Shooting (eFG%)', `Contest every shot: they shoot ${X} eFG.`, `They miss a lot (${X} eFG): contest, then rebound.`],
+    ['Offensive rebounding', `Box out: they grab ${X} of their own misses.`, 'Leak out: they rarely crash the offensive glass.'],
+    ['Defensive rebounding', `One shot only: they take ${X} of defensive rebounds. Get back.`, 'Crash the glass: they give up offensive rebounds.'],
+    ['Defence (rating or opponents’ eFG%)', `Expect a grind: they allow ${X} per 100 possessions. Value every shot.`, `Attack early: they allow ${X} per 100 possessions.`],
+    ['Offence (rating)', `Dangerous offence (${X} per 100): talk on every screen.`, `They struggle to score (${X} per 100): stay solid, no cheap fouls.`],
+    ['Their turnovers', 'Don’t gamble for steals: they rarely turn it over.', `Pressure the ball: ${X} turnovers per 100 plays.`],
+    ['Turnovers forced or steals', `Value the ball: they force ${X} turnovers per 100 plays.`, '<span class="muted">no line</span>'],
+    ['Free throw accuracy', '<span class="muted">no line</span>', `Close game late? Foul: they shoot ${X} from the line.`],
+    ['Getting to the line', 'Defend without reaching: they draw a lot of fouls.', '<span class="muted">no line</span>'],
+    ['Blocks', `Pump-fake at the rim: ${X} blocks a game.`, '<span class="muted">no line</span>']
+  ].map(([m, s, w]) => `<tr><td class="txt nw"><b>${m}</b></td><td class="txt">${s}</td><td class="txt">${w}</td></tr>`).join('');
+
+  const toc = `<nav class="doc-toc" aria-label="On this page"><p class="eyebrow">On this page</p>${METHOD_TOC.map(([id, t], i) => `<a href="#method-${id}" data-sec="m-${id}"><span>${i + 1}</span>${t}</a>`).join('')}</nav>`;
+
+  const body = [
+    sec('data', 'Where the data comes from', `
+      <p>Every number on this site comes from <a href="https://www.basketaki.com" target="_blank" rel="noopener">basketaki.com</a>, the league’s official site. Nothing is typed in by hand.</p>
+      ${ul([
+        `<b>The team’s results page:</b> every game since ${L(fdate(first.date, 1))} with its date, opponent, competition, season, matchday, home or away, and the final score.`,
+        '<b>Each game’s box score page:</b> the quarter scores, the MVP and every player’s line for both teams: minutes, points, rebounds (offensive and defensive), assists, steals, blocks, turnovers, 2-pointers, 3-pointers, free throws and EFF.',
+        '<b>For upcoming games:</b> the team’s schedule, the gyms page (address and map position), the league standings, and the opponent’s results and box scores for the current season.'
+      ])}
+      <p><b>Daily update.</b> A GitHub job runs the scrapers every morning at 06:15 UTC (08:15 Athens time in winter, 09:15 in summer). If anything changed (a new game, a corrected stat, a confirmed date) it saves the new data and republishes the site within a few minutes. “Last updated” at the bottom of each page is the last time the game data changed. If a run fails, nothing is published and the site keeps the last good data.</p>
+      <p><b>What basketaki doesn’t record:</b> fouls, play-by-play, who was on the court together, and shot locations. So foul stats, a real plus-minus and lineup stats can’t exist here, and a few stats are estimated (explained below). The box score also has a column called ΤΜΡ that basketaki doesn’t explain; it is 0 in all but ${L(tmrN)} of ${L(f0(LINES.length))} player lines, so it isn’t used.</p>`),
+
+    sec('games', 'Which games count', `
+      <p>${L(GAMES.length)} games are listed since ${fdate(first.date, 1)}. Each one falls into one of three groups:</p>
+      ${defs([
+        [`Played (${L(real.length)})`, 'Finished on court with a final score. These count everywhere: records, points, margins and, when there is a box score, player and team stats.'],
+        [`Forfeits (${L(ffW + ffL)})`, `${L(ffW)} won and ${L(ffL)} lost. A game counts as a forfeit when the score is ${C('20–0')} or ${C('0–20')} and nobody scored in the box score. Forfeits count in the win–loss record by default, because they count in the standings; the <b>Forfeits count in W–L</b> filter takes them out. They never count in points per game, margins or player stats, because nothing was played.`],
+        [`No result (${L(noRes)})`, 'Listed by basketaki without a result (a bye, or a cancelled or postponed game). They appear in the game log but count nowhere.']
+      ])}
+      <p><b>Box scores.</b> Of the ${L(real.length)} played games, ${L(withBox.length)} have a ${esc(TEAM)} box score and ${L(full.length)} have a complete box score for both teams. Complete means the players’ points add up to the final score.</p>
+      ${ul([
+        `<b>No box score (${L(noBox)} ${noBox === 1 ? 'game' : 'games'}):</b> counts in the record and in points per game, not in player stats.`,
+        `<b>Incomplete box score (${L(partial)} ${partial === 1 ? 'game' : 'games'}):</b> the players basketaki lists still count in player stats, but the game is left out of team box-score numbers (ratings, pace, four factors, team averages), because a missing player would distort them.`,
+        '<b>Players who didn’t play:</b> basketaki lists the whole roster. Rows with no minutes and no stats are removed, so “games played” means games where the player actually got on the court.'
+      ])}`),
+
+    sec('basic', 'Basic stats and shooting', `
+      ${ul([
+        '<b>Per game</b> = total ÷ games played. Team points per game use played games only, so forfeits don’t count as 20–0.',
+        '<b>Percentages are always worked out from totals.</b> A season FG% is all made shots ÷ all attempts, not the average of each game’s percentage, so a 1-for-2 night doesn’t weigh as much as a 10-for-20 night.',
+        `<b>Per 40 minutes</b> = total × 40 ÷ minutes played. Games are four 10-minute quarters: our five players’ minutes add up to ${L(medMin)} in a typical game.`
+      ])}
+      ${defs([
+        ['FG', `${F('FG = 2-pointers + 3-pointers')} basketaki records twos and threes separately.`],
+        ['eFG%', `${F('(FGM + 0.5 × 3PM) ÷ FGA')} Effective field goal %: a made three counts as 1.5 baskets, because it is worth 1.5 times the points.`],
+        ['TS%', `${F('PTS ÷ (2 × (FGA + 0.44 × FTA))')} True shooting: points per shooting chance, free throws included (0.44 is explained under possessions).`],
+        ['3PA rate', `${F('3PA ÷ FGA')} Share of shots taken from three.`],
+        ['FT rate', `${F('FTA ÷ FGA')} in the player tables: how often a player gets to the line. The team four factors use ${C('FTM ÷ FGA')} instead (see possessions and team ratings).`],
+        ['AST/TO', `${F('AST ÷ TOV')}`],
+        ['TOV%', `${F('TOV ÷ (FGA + 0.44 × FTA + TOV)')} Turnovers per 100 plays the player finished.`],
+        ['EFF', `${F('PTS + REB + AST + STL + BLK − missed FG − missed FT − TOV')} basketaki’s own efficiency number, shown exactly as basketaki publishes it. The formula gives basketaki’s value in ${L(f0(LINES.length - effMiss.length))} of ${L(f0(LINES.length))} player lines${missTop ? `; ${L(missTop[1])} of the other ${L(effMiss.length)} are from ${seasonLabel(missTop[0])}, when basketaki seems to have counted it differently` : ''}.`],
+        ['GmSc', `${F('PTS + 0.4×FGM − 0.7×FGA − 0.4×(FTA − FTM) + 0.7×OREB + 0.3×DREB + STL + 0.7×AST + 0.7×BLK − TOV')} John Hollinger’s Game Score: one number for a whole box score line. About 10 is an average game, 20+ is excellent. The original also subtracts 0.4 × fouls; basketaki doesn’t record fouls, so that part is left out and scores come out slightly higher.`],
+        ['DD / TD', 'Double-double / triple-double: 10 or more in two / three of points, rebounds, assists, steals and blocks.'],
+        ['MVP', 'basketaki’s MVP of the game (the trophy in the box score).'],
+        ['Where the points come from', `${C('2 × 2PM')}, ${C('3 × 3PM')} and ${C('FTM')}, each as a share of all points.`],
+        ['20+ / 30-point games', 'Games with at least 20 / 30 points. Career highs are the best single game in the games shown.']
+      ])}`),
+
+    sec('poss', 'Possessions and team ratings', `
+      <p>basketaki doesn’t count possessions, so they are estimated from the box score with the standard formula:</p>
+      ${fm('Possessions = FGA + 0.44 × FTA − OREB + TOV')}
+      <p>A possession ends with a shot, a turnover or free throws. An offensive rebound keeps the same possession going, so it is subtracted. Not every free throw ends a possession (and-ones, technicals, three-shot fouls), so each free throw attempt counts as 0.44 of a possession. That 0.44 comes from NBA data; <b>we assume it fits basketaki games too.</b></p>
+      ${example}
+      ${defs([
+        ['Offensive rating', `${F('100 × points ÷ possessions')} Points scored per 100 possessions. It compares offences fairly even when one team plays faster.`],
+        ['Defensive rating', `${F('100 × opponents’ points ÷ opponents’ possessions')} Points allowed per 100 possessions. Lower is better.`],
+        ['Net rating', `${F('offensive rating − defensive rating')}`],
+        ['Pace', `${F('(our possessions + opponents’ possessions) ÷ 2 ÷ games')} Both teams get almost the same number of possessions in a game, so averaging the two evens out errors in the estimate.`]
+      ])}
+      <p><b>Totals first.</b> For a group of games (a season, every game against one team, and so on), all the box score totals are added up first and divided once at the end. A 90-possession game counts more than a 60-possession one, and one strange game can’t swing the average much. Only the ${L(full.length)} games with complete box scores for both teams are used. Across all of them: offensive rating ${L(f1(all.ortg))}, defensive rating ${L(f1(all.drtg))}, pace ${L(f1(all.pace))}.</p>
+      <h3>Four factors</h3>
+      ${defs([
+        ['Shooting', `${C('eFG%')}, as above.`],
+        ['Turnovers', `${F('TOV ÷ (FGA + 0.44 × FTA + TOV)')} Lower is better.`],
+        ['Offensive rebounding', `${F('our OREB ÷ (our OREB + their DREB)')} The share of our own misses we got back.`],
+        ['Free throws', `${F('FTM ÷ FGA')} Dean Oliver’s version: it rewards both getting to the line and making the shots.`]
+      ])}
+      <p>The same four are worked out for the opponents from their side of the box score. The team per-game averages on the Team page use the same complete box scores; assisted baskets = ${C('AST ÷ FGM')}.</p>`),
+
+    sec('adv', 'Advanced player stats', `
+      <p>Stats like usage or rebound % normally need to know who was on the court for every possession. basketaki has no lineup data, so they are estimated from minutes. Each player gets a share of the game:</p>
+      ${fm('Share = MIN ÷ (team MIN ÷ 5)', '20 minutes of a 40-minute game (team minutes 200) gives a share of 0.5.')}
+      <p><b>We assume the team’s possessions, shots and rebounds were spread evenly over the game</b>, so a player on the court for half of it saw about half of them. Only games where both teams have a box score count, because the opponent’s numbers are needed. As with team stats, the tops and bottoms of each fraction are added up over all games first and divided once.</p>
+      ${defs([
+        ['USG%', `${F('(FGA + 0.44 × FTA + TOV) ÷ (share × team’s (FGA + 0.44 × FTA + TOV))')} The share of the team’s plays he finished while on the court.`],
+        ['AST%', `${F('AST ÷ (share × team FGM − his own FGM)')} The share of teammates’ baskets he assisted.`],
+        ['ORB%', `${F('OREB ÷ (share × (team OREB + opponents’ DREB))')}`],
+        ['DRB%', `${F('DREB ÷ (share × (team DREB + opponents’ OREB))')}`],
+        ['TRB%', `${F('REB ÷ (share × (team REB + opponents’ REB))')}`],
+        ['STL%', `${F('STL ÷ (share × opponents’ possessions)')}`],
+        ['BLK%', `${F('BLK ÷ (share × opponents’ 2PA)')} Only 2-point attempts, because threes are rarely blocked.`],
+        ['+/− team', 'The team’s average final margin in the played games he was part of. This is not a real plus-minus: without lineup data there is no way to know the score while he was on the court.'],
+        ['With and without', 'The team’s record and margin in games with a box score, in the seasons he played, split by whether he is in the box score. Forfeits and games without a box score are left out, because we can’t tell who played.'],
+        ['Games together', 'How many box scores two players share, and the team’s record in them. On Compare, “Playing together” means games where all the selected players are in the box score.']
+      ])}`),
+
+    sec('min', 'Minimums and percentiles', `
+      <p>Averages over two or three games are mostly luck, so lists that rank players need a minimum number of games:</p>
+      ${defs([
+        ['Leaders and leaderboards', `${F('20% of the games with a box score, rounded, between 1 and 10')} Worked out for the games in the current filters. With no filters: ${L(amin)} games (from ${L(nBox)} box scores). On the Players page you can type your own minimum.`],
+        ['Top scorer of a season', 'At least 30% of that season’s box scores (Seasons page).'],
+        ['Best seasons', 'At least 5 games in that season (Records page). The true shooting list also needs 40+ field goal attempts.'],
+        ['Players to watch', 'At least 40% of the opponent’s box scores this season, rounded up (match preview).']
+      ])}
+      <p><b>Percentiles</b> (the player radar and Compare). Each player is ranked among the ${esc(TEAM)} players who meet the leaders’ minimum in the current filters:</p>
+      ${fm('Percentile = (players below him + half of the players tied with him) ÷ all players × 100', '100 = best on the team, 50 = middle.')}
+      <p>The eight categories: points, rebounds, assists, steals, blocks and EFF per 40 minutes, true shooting %, and ball security (a lower TOV% ranks higher).</p>
+      <p><b>Ties.</b> In “best single games” the earlier game is listed first; in career leaders the player with more games comes first. When a table or comparison highlights the best value, lower wins where lower is better (turnovers, points allowed, defensive rating).</p>`),
+
+    sec('records', 'Records, streaks, situations', defs([
+      ['Win–loss record', 'Decided games only. Forfeits follow the forfeit filter; games with no result never count. Win % = wins ÷ (wins + losses).'],
+      ['Streaks', 'Wins or losses in a row over decided games, in date order. Games with no result are skipped and don’t break a streak. The current streak is the run that ends with the latest decided game.'],
+      ['Points, margins, team records', 'Played games only (most points, biggest win, fewest allowed, and so on).'],
+      ['Close games and blowouts', `Close = decided by 5 points or fewer. Player splits also show blowouts (decided by 15+). The Team page groups margins as 1–5, 6–10, 11–20 and 21+.`],
+      ['Halftime and after 3 quarters', 'The score after quarters 1–2 and after quarters 1–3, in games with quarter scores. Tied at that point counts as neither leading nor trailing.'],
+      ['Biggest comeback / lead lost', 'The largest halftime deficit in a game we won / the largest halftime lead in a game we lost.'],
+      ['Quarters won', 'We win a quarter when we outscore the opponent in it; an equal quarter is a tie.'],
+      ['Overtime games', 'Games with an overtime score.'],
+      ['Months and days of the week', 'From the game’s date.']
+    ])),
+
+    sec('filters', 'Filters', ul([
+      'The season, competition, opponent, home/away and result filters apply to every page except single games, match previews and this page.',
+      'The Seasons page and each season’s page ignore the season filter, and opponent pages ignore the opponent filter, because those pages are about one season or one opponent.',
+      'The forfeit checkbox only changes win–loss records, win % and streaks (on match previews too). Forfeits have no stats, so nothing else moves.',
+      'Your filters, theme and table choices are remembered in this browser only.',
+      'Home/away is basketaki’s label. Gyms in this league are assigned, so it mostly shows which team is listed first. That is why the game plan ignores it.',
+      'Scores always show the Pistols first, even though basketaki lists the home team first.'
+    ])),
+
+    sec('upcoming', 'Upcoming games', ul([
+      'Upcoming games come from basketaki’s schedule page and are checked every morning together with the stats.',
+      '<b>A game is confirmed when both its date and its gym are set.</b> Until then it shows the opponent’s logo and whatever is known (matchday, competition, date). Once it is confirmed, the next-game card, the match preview and the game plan appear by themselves.',
+      'The calendar shows each upcoming game with the opponent’s logo and colors past game days by result; if two games fall on the same day it shows the later one.',
+      'The gym’s address comes from basketaki’s gyms page. The Google Maps link uses the gym’s map position from that page, or searches its name and address if there is no position.',
+      'Times are shown as basketaki lists them (Athens time). The countdown (“In 12 days”) uses your device’s date.',
+      'League position and the league table are copied from basketaki’s standings for that competition.',
+      'Head to head comes from our own game data: every decided meeting ever, and the ones this season.'
+    ])),
+
+    sec('scout', 'Scouting and game plan', `
+      <p>Every confirmed game gets a scouting report on the opponent. <b>Nothing in it is written by hand:</b> the same rules run on every opponent’s box scores each morning, so the report changes as they play more games.</p>
+      ${defs([
+        ['Which games', 'Only the opponent’s current season (all competitions in it). Older seasons are left out because basketaki rosters change a lot. Team measures use games where both teams’ box scores are complete; player numbers use every box score.'],
+        ['League average', `All the other teams in the current season’s box scores we have: the opponent’s opponents, the ${esc(TEAM)} in our games, and our opponents in our games, each game used once.${S && sctx ? ` For the next game, against ${esc(S.team)}, that is ${L(plural(sctx.M.n, 'complete box score'))} of theirs compared with ${L(plural(sctx.B.n, 'team game'))} in the league sample.` : ''}`],
+        ['Strength or weakness', `Each measure gets a score: ${C('(their value − league average) ÷ threshold')}, signed so that positive is good for them. A score of ${L(SIG)} or more is a strength, ${L('−' + SIG)} or less a weakness. The game plan shows the three biggest of each. Pace, share of threes and assisted baskets are style, not good or bad, so they show High or Low instead.`]
+      ])}
+      <h3>The measures</h3>
+      <p>All from their complete box scores this season, totals first. The last column is the threshold × ${SIG}: the smallest difference from the league average that counts.</p>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th class="txt">Measure</th><th class="txt">Calculation</th><th class="txt">Better is</th><th class="txt">Clear difference</th></tr></thead><tbody>${howRows}</tbody></table></div>
+      <h3>Keys to the game</h3>
+      ${ol([
+        'Scorers first. If their top scorer has 25% or more of the team’s points, the first key is to stop him. Otherwise it names their two main scorers (adding their combined share when it is 40% or more).',
+        'Then the measures with the biggest scores, strengths and weaknesses alike, each become one line from the table below, until there are 4 keys. Only one line per topic, so you never get three shooting tips. Overall shooting (eFG%) is ranked a little lower (× 0.9), so a more specific line about twos or threes wins when they are close.',
+        'If fewer than 2 keys come out, it adds: “No clear weak spot: share the ball and win the rebound battle.”'
+      ])}
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th class="txt">Measure</th><th class="txt">When it is their strength</th><th class="txt">When it is their weakness</th></tr></thead><tbody>${KEYS}</tbody></table></div>
+      <h3>Players to watch</h3>
+      <p>The three top scorers (points per game) among their players with at least 40% of their box scores. Each card gets up to two tags, checked in this order:</p>
+      ${defs([
+        ['Go-to scorer', 'Their top scorer with 25%+ of the team’s points. Otherwise <b>Scorer</b>: 12+ points a game.'],
+        ['Shooter', '1.5+ threes made a game, at 30% or better.'],
+        ['Playmaker', '3+ assists a game.'],
+        ['Offensive rebounder', '3+ offensive rebounds a game. Otherwise <b>Rebounder</b>: 8+ rebounds a game.'],
+        ['Rim protector', '1+ block a game.'],
+        ['Ball hawk', '2+ steals a game.']
+      ])}
+      <p>And one tip, the first rule that fits:</p>
+      ${ol([
+        '3+ three-point attempts a game at 30%+ → “Close out hard”.',
+        '12+ points a game but under 25% from three (on 3+ attempts) → “Give him the three, take away the drive”.',
+        '12+ points a game with 6+ two-point attempts → “Scores inside: wall up and help early”.',
+        '3+ assists → “Deny him the ball”.',
+        '1+ block → “Use pump fakes near the rim”.',
+        '2.5+ offensive rebounds → “Box him out on every shot”.',
+        'Under 25% from three on 3+ attempts → “Give him the three”.',
+        '2+ steals → “Protect the ball around him”.',
+        'Under 55% from the line (6+ attempts in total) → “Foul rather than give up a layup”.',
+        '6+ two-point attempts → “Scores inside”.',
+        'Otherwise → “Keep him off his spots”.'
+      ])}
+      <p><b>The other panels.</b> The matchup compares both teams’ complete box scores this season (the better value is highlighted). Quarter by quarter averages their points scored and allowed in each quarter. Their games this season lists every game with their top scorer.</p>`),
+
+    sec('names', 'Names, seasons, labels', ul([
+      'Players and opponents are matched by their basketaki id, not by name, so a spelling change doesn’t split one player into two. An opponent that renamed itself shows its latest name.',
+      'basketaki writes Greek names as surname, an initial, then first name. The site shows first name and surname and drops the initial.',
+      'Seasons use basketaki’s label (26/27 is shown as 2026–27). A season runs from September to July and includes the winter league, the summer league and the cup.',
+      'Competition names are spelled out: W. and S. become Winter and Summer (W.Evolution is the Winter Evolution League), and the Athens Superbet Cup is shown as Cup. The league/cup and winter/summer splits use these.',
+      'Dates are shown day/month/year.'
+    ])),
+
+    sec('limits', 'Limitations', ul([
+      '<b>No fouls:</b> no foul stats, and Game Score leaves out its foul term.',
+      '<b>No lineups:</b> the on-court stats (usage, rebound % and the rest) are estimates based on minutes, and +/− is the team’s margin, not the player’s.',
+      '<b>Possessions are estimates:</b> 0.44 per free throw is an average, and turnovers or rebounds that basketaki doesn’t credit to a player aren’t in the totals, so possessions may come out slightly low.',
+      `<b>Missing box scores:</b> ${L(noBox)} played ${noBox === 1 ? 'game has' : 'games have'} no box score and ${L(partial)} ${partial === 1 ? 'is' : 'are'} incomplete on basketaki. They still count in the record.`,
+      '<b>Small samples:</b> early in a season a scouting report rests on a few games and can swing a lot.',
+      missTop ? `<b>Old EFF values:</b> in ${seasonLabel(missTop[0])} basketaki’s EFF doesn’t always follow its own formula. The site shows basketaki’s number anyway.` : '',
+      '<b>Only as good as the source:</b> the stats are what the scorers entered on basketaki. If basketaki corrects a game, the next morning’s update picks it up.',
+      '<b>Layout changes:</b> if basketaki redesigns its pages, the daily update can fail. The site then keeps the last good data until the scraper is fixed.'
+    ])),
+
+    sec('check', 'How the numbers were checked', `
+      <p>When the site was built, the data and every page were checked like this:</p>
+      ${ul([
+        '<b>Two separate scrapers</b>, one in PowerShell and one in Python, produced exactly the same data: 191 games and 2,533 player lines, every value matching (5,539 game values and 70,924 player values).',
+        '<b>10 random games</b> were checked by hand against basketaki.',
+        '<b>Every number on the site</b> (228,239 values across all pages) was recalculated from the raw data by an independent Python script: 0 mismatches. To prove the checker works, 6 deliberate errors were planted in the site, and it caught all 6.',
+        '<b>Scouting</b> for one opponent was compared with basketaki’s own team page: the leaders, team totals, record and all 208 table cells matched.',
+        '<b>Every update</b> prints a warning for any game whose box score doesn’t add up to the final score.'
+      ])}`)
+  ].join('');
+
+  return `${head('<p class="eyebrow">Behind the numbers</p><h1>How it works</h1>', 'Every calculation on this site, where the data comes from and what we assume. Numbers in orange come from the current data and update with every game.')}
+  <div class="doc">${toc}<div class="doc-body">${body}</div></div>`;
+}
+
+const VIEWS = { overview: vOverview, games: vGames, game: vGame, players: vPlayers, player: vPlayer, opponents: vOpponents, opponent: vOpponent, seasons: vSeasons, season: vSeason, team: vTeam, records: vRecords, compare: vCompare, match: vMatch, method: vMethod };
 const NAV_OF = { game: 'games', player: 'players', opponent: 'opponents', season: 'seasons', match: 'overview' };
 function route() {
   let h = location.hash.slice(1); try { h = decodeURIComponent(h); } catch (e) { /* keep raw */ }
-  const m = /^(game|player|opponent|season|match)-(.+)$/.exec(h);
+  const m = /^(game|player|opponent|season|match|method)-(.+)$/.exec(h);
   if (m) return { view: m[1], arg: m[2] };
   return { view: VIEWS[h] ? h : 'overview' };
 }
-let lastHash = null;
-const NAV_LABEL = { overview: 'Overview', games: 'Games', players: 'Players', opponents: 'Opponents', seasons: 'Seasons', team: 'Team analytics', records: 'Records', compare: 'Compare players' };
+let lastHash = null, lastView = null;
+const NAV_LABEL = { overview: 'Overview', games: 'Games', players: 'Players', opponents: 'Opponents', seasons: 'Seasons', team: 'Team analytics', records: 'Records', compare: 'Compare players', method: 'How it works' };
 function titleFor(r) {
   if (r.view === 'game') { const g = GBYRID.get(r.arg); return g ? `${fdate(g.date)} ${vsTxt(g)}` : ''; }
   if (r.view === 'player') { const p = PLBYRID.get(r.arg); return p ? p.disp : ''; }
@@ -2200,6 +2524,31 @@ function titleFor(r) {
   if (r.view === 'match') { const g = UPBYRID.get(r.arg); return g ? 'Preview vs ' + g.opponent : ''; }
   return r.view === 'overview' ? '' : NAV_LABEL[r.view];
 }
+/* sticky top bar height (0 on phones, where it scrolls away): used to land section jumps below it */
+const topbarEl = document.querySelector('.topbar'), helpBtn = document.getElementById('help-btn');
+function topbarH() { return getComputedStyle(topbarEl).position === 'sticky' ? topbarEl.getBoundingClientRect().height : 0; }
+function syncTopbarH() { document.documentElement.style.setProperty('--tb', Math.round(topbarH()) + 'px'); }
+function goToSection(id, smooth) {
+  const el = id && document.getElementById(id);
+  let top = 0;
+  if (el) {
+    const anc = el.closest('main.gut > *'), tf = anc ? getComputedStyle(anc).transform : 'none';
+    const slide = tf && tf !== 'none' ? new DOMMatrixReadOnly(tf).m42 : 0; // the page's slide-in animation may still be running
+    top = el.getBoundingClientRect().top - slide + window.scrollY - topbarH() - 14;
+  }
+  window.scrollTo({ top: Math.max(0, top), behavior: smooth && !reduceMotion() ? 'smooth' : 'auto' });
+}
+let spyQueued = false;
+function spySections() {
+  spyQueued = false;
+  const toc = app.querySelector('.doc-toc'); if (!toc) return;
+  const line = topbarH() + 40, secs = app.querySelectorAll('.doc-sec'); let cur = secs.length ? secs[0].id : null;
+  for (const s of secs) { if (s.getBoundingClientRect().top <= line) cur = s.id; else break; }
+  if (secs.length && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = secs[secs.length - 1].id;
+  toc.querySelectorAll('a[data-sec]').forEach(a => { if (a.dataset.sec === cur) a.classList.add('on'); else a.classList.remove('on'); });
+}
+window.addEventListener('scroll', () => { if (!spyQueued) { spyQueued = true; requestAnimationFrame(spySections); } }, { passive: true });
+window.addEventListener('resize', syncTopbarH);
 function countUp() {
   if (reduceMotion()) return;
   app.querySelectorAll('.countup').forEach(el => {
@@ -2217,14 +2566,18 @@ function render(keep, anim) {
   app.innerHTML = html;
   const nav = NAV_OF[r.view] || r.view;
   document.querySelectorAll('.nav a').forEach(a => { if (a.dataset.view === nav) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
-  filtersEl.hidden = r.view === 'game';
+  if (r.view === 'method') helpBtn.setAttribute('aria-current', 'page'); else helpBtn.removeAttribute('aria-current');
+  filtersEl.hidden = r.view === 'game' || r.view === 'method';
   syncFilters();
+  syncTopbarH();
   mountCharts();
   const tt = titleFor(r);
   document.title = (tt ? tt + ' · ' : '') + 'Athens Pistols Stats';
   if (keep) window.scrollTo(0, y);
+  else if (r.view === 'method' && r.arg) goToSection('m-' + r.arg);
   else if (location.hash !== lastHash) { window.scrollTo(0, 0); }
-  lastHash = location.hash;
+  lastHash = location.hash; lastView = r.view;
+  spySections();
   if (anim) countUp();
 }
 app.addEventListener('click', e => {
@@ -2255,7 +2608,12 @@ app.addEventListener('input', e => {
   const t = e.target;
   if (t.matches('input[data-q]')) { const id = t.dataset.q; U.q[id] = t.value; if (TABLES[id]) { TABLES[id].q = t.value; refreshTable(id); } saveU(); }
 });
-window.addEventListener('hashchange', () => render(false, true));
+window.addEventListener('hashchange', () => {
+  // moving between sections of How it works: just scroll, no re-render
+  const r = route();
+  if (r.view === 'method' && lastView === 'method') { lastHash = location.hash; goToSection(r.arg ? 'm-' + r.arg : null, true); return; }
+  render(false, true);
+});
 
 /* ---------- quick finder (press / to focus) */
 const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -2323,7 +2681,7 @@ window.addEventListener('scroll', () => { if (topTick) return; topTick = true; r
 totop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion() ? 'auto' : 'smooth' }));
 if (window.matchMedia) { const mq = window.matchMedia('(prefers-color-scheme: dark)'); const re = () => render(true); if (mq.addEventListener) mq.addEventListener('change', re); else if (mq.addListener) mq.addListener(re); }
 
-document.getElementById('foot-src').innerHTML = `Data from <a href="${esc(D.source || 'https://www.basketaki.com')}" target="_blank" rel="noopener">basketaki.com</a> · ${plural(GAMES.length, 'game')} · ${plural(PL.size, 'player')}`;
+document.getElementById('foot-src').innerHTML = `Data from <a href="${esc(D.source || 'https://www.basketaki.com')}" target="_blank" rel="noopener">basketaki.com</a> · ${plural(GAMES.length, 'game')} · ${plural(PL.size, 'player')} · <a href="#method">How it works</a>`;
 document.getElementById('foot-upd').textContent = D.scraped_at ? `Last updated ${fdate(String(D.scraped_at).slice(0, 10), 1)}` : '';
 buildFilters();
 render(false, true);
