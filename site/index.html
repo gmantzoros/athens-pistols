@@ -274,6 +274,98 @@ table.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;
 footer{border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
 footer .gut{padding-block:20px 36px;display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
 
+/* ---------- upcoming games: calendar, next game, match preview */
+.up-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:22px;align-items:start}
+.cal{display:grid;gap:8px}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cal-head b{font-family:var(--font-display);font-weight:800;font-size:22px;text-transform:uppercase;letter-spacing:.04em}
+.cal-nav{display:flex;gap:6px}
+.cal-nav button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;font-size:15px;line-height:1}
+.cal-nav button:hover{border-color:var(--accent);color:var(--accent-text)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.cal-dow{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;font-weight:700;padding:2px 0}
+.cal-day{min-height:58px;border-radius:8px;background:var(--surface-2);padding:4px 5px;display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--fg-2);text-decoration:none;border:1px solid transparent;min-width:0;overflow:hidden}
+.cal-day.blank{background:transparent}
+.cal-day.today{border-color:var(--fg-2)}
+.cal-day .d{font-variant-numeric:tabular-nums;font-weight:600;font-size:11.5px}
+a.cal-day:hover{text-decoration:none;border-color:var(--accent)}
+.cal-day.next{background:var(--accent);color:var(--accent-ink)}
+.cal-day.next .ev{color:var(--accent-ink)}
+.cal-day .ev{display:flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;line-height:1.1;min-width:0}
+.cal-day .ev .evt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+@media (max-width:560px){.cal-day .ev .evt{display:none}.cal-day{min-height:50px;padding:4px}}
+.cal-day .res{width:18px;height:18px;font-size:10px;border-radius:5px;flex:none}
+.cal-legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:12px;color:var(--muted);align-items:center}
+.cal-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+.tlogo{display:inline-grid;place-items:center;border-radius:50%;background:#fff;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.tlogo img{width:100%;height:100%;object-fit:contain}
+.tlogo b{display:none;font-family:var(--font-display);font-weight:800;color:#170a02;font-size:.42em;line-height:1}
+.tlogo.nologo{background:var(--accent)}
+.tlogo.nologo b{display:block}
+.nextg{display:grid;gap:12px;padding:18px;border-radius:var(--r);background:var(--band);color:var(--band-fg);border:1px solid var(--band-line)}
+.nextg .eyebrow{color:var(--band-accent);margin:0}
+.ng-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ng-count{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--band-accent);color:#170a02}
+.ng-vs{display:flex;align-items:center;gap:12px;min-width:0}
+.ng-vs .x{font-family:var(--font-display);font-weight:800;font-size:18px;color:var(--band-muted)}
+.ng-vs .n{min-width:0}
+.ng-vs .n b{display:block;font-family:var(--font-display);font-weight:800;font-size:28px;text-transform:uppercase;line-height:1;overflow-wrap:anywhere}
+.ng-vs .n span{font-size:12.5px;color:var(--band-muted)}
+.ng-when{font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:.02em}
+.ng-gym{font-size:13.5px;color:var(--band-fg);display:grid;gap:4px}
+.ng-gym span{color:var(--band-muted)}
+.maplink{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--band-accent)}
+.ng-facts{display:flex;flex-wrap:wrap;gap:6px}
+.ng-facts span{font-size:12px;padding:4px 9px;border-radius:999px;background:var(--band-2);border:1px solid var(--band-line);color:var(--band-fg)}
+.btn-cta{display:inline-flex;justify-content:center;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;background:var(--band-accent);color:#170a02;font-weight:800;text-decoration:none;font-size:14px}
+.btn-cta:hover{text-decoration:none;filter:brightness(1.06)}
+.uplist{display:grid;gap:6px}
+.upitem{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none}
+.upitem:hover{border-color:var(--accent);text-decoration:none}
+.upitem b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.upitem .meta{font-size:12px;color:var(--muted)}
+.tbc{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border:1px dashed var(--muted);border-radius:4px;padding:2px 6px;white-space:nowrap}
+.when{font-size:12px;font-weight:700;color:var(--accent-text);white-space:nowrap}
+.mh{background:var(--band);color:var(--band-fg);border:1px solid var(--band-line);border-radius:var(--r);padding:22px clamp(16px,3vw,32px);display:grid;gap:16px}
+.mh-teams{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px 20px}
+.mh-team{display:flex;align-items:center;gap:14px;min-width:0}
+.mh-team.r{justify-content:flex-end;text-align:right}
+.mh-team b{font-family:var(--font-display);font-weight:800;font-size:clamp(22px,3.4vw,36px);text-transform:uppercase;line-height:1;overflow-wrap:anywhere}
+.mh-mid{display:grid;justify-items:center;gap:4px;text-align:center}
+.mh-mid .vs{font-family:var(--font-display);font-weight:800;font-size:28px;color:var(--band-accent)}
+.mh-info{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px}
+.mh-info div{display:grid;gap:2px}
+.mh-info small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--band-muted);font-weight:700}
+.verdict{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.v-str{background:var(--fg);color:var(--bg)}
+.v-weak{background:var(--accent-wash);color:var(--accent-text);box-shadow:inset 0 0 0 1px var(--accent)}
+.v-avg{color:var(--muted);box-shadow:inset 0 0 0 1px var(--line)}
+.v-style{color:var(--fg-2);box-shadow:inset 0 0 0 1px var(--fg-2)}
+.roles{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.role{font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:999px;background:var(--surface-2);color:var(--fg-2);border:1px solid var(--line);white-space:nowrap}
+.role.hot{background:var(--accent-wash);color:var(--accent-text);border-color:transparent}
+.watch{display:grid;gap:10px;padding:14px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface);min-width:0}
+.watch-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.watch-h b{font-size:16px}
+.watch-h span{font-family:var(--font-display);font-weight:800;font-size:28px;color:var(--accent-text);line-height:1}
+.watch p{font-size:13.5px;color:var(--fg-2)}
+.watch .mini{display:flex;gap:12px;font-size:12px;color:var(--muted);flex-wrap:wrap}
+.watch .mini b{color:var(--fg);font-size:13px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:18px}
+.plan h3{font-size:19px;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.plan h3 i{display:inline-block;width:10px;height:10px;border-radius:3px;background:var(--accent)}
+.plan ul{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+.plan li{position:relative;padding-left:16px;font-size:14px;line-height:1.5;color:var(--fg)}
+.plan li::before{content:"";position:absolute;left:0;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.plan li b{color:var(--fg)}
+.formstrip{display:flex;flex-wrap:wrap;gap:6px}
+.formstrip span{display:grid;place-items:center;min-width:34px;height:34px;padding:0 6px;border-radius:8px;font-family:var(--font-display);font-weight:800;font-size:17px}
+.formstrip .W{background:var(--accent);color:var(--accent-ink)}
+.formstrip .L{background:var(--surface-2);color:var(--fg-2);box-shadow:inset 0 0 0 1px var(--line)}
+.tbl tr.us-row td,.tbl tr.us-row td:first-child{background:var(--accent-wash)}
+.tbl tr.them-row td,.tbl tr.them-row td:first-child{background:var(--surface-2);font-weight:700}
+@media (max-width:860px){.up-grid{grid-template-columns:1fr}.mh-teams{grid-template-columns:1fr;justify-items:start}.mh-team.r{justify-content:flex-start;flex-direction:row-reverse;text-align:left}.mh-mid{justify-items:start}}
+
 /* ---------- logo, finder, theme, motion, cards */
 .brand img{width:40px;height:40px;flex:none;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .brand:hover img{transform:rotate(-8deg) scale(1.06)}
@@ -409,6 +501,7 @@ main.gut>*:nth-child(5){animation-delay:.16s} main.gut>*:nth-child(n+6){animatio
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="data.js" charset="utf-8"></script>
+<script src="upcoming.js" charset="utf-8" onerror="window.PISTOLS_UPCOMING = null"></script>
 <script>
 (function () {
 'use strict';
@@ -614,14 +707,15 @@ function streaks(games) {
 function four(A, B) {
   return { efg: ratio(A.fgm + 0.5 * A.fg3m, A.fga), tov: ratio(A.tov, A.fga + 0.44 * A.fta + A.tov), orb: ratio(A.oreb, A.oreb + B.dreb), ftr: ratio(A.ftm, A.fga) };
 }
-function teamAgg(games) {
+function teamAgg(games, bx) {
+  bx = bx || boxOf;
   const r = record(games);
   const real = games.filter(g => g.real);
   let pf = 0, pa = 0;
   for (const g of real) { pf += g.team_score; pa += g.opp_score; }
-  const full = real.filter(g => { const b = boxOf(g); return b && b.full; });
+  const full = real.filter(g => { const b = bx(g); return b && b.full; });
   const Us = zero(), Op = zero();
-  for (const g of full) { const b = boxOf(g); addT(Us, b.usT); addT(Op, b.themT); }
+  for (const g of full) { const b = bx(g); addT(Us, b.usT); addT(Op, b.themT); }
   const pU = poss(Us), pO = poss(Op);
   return Object.assign(r, {
     games, real, nReal: real.length, pf, pa,
@@ -1115,6 +1209,7 @@ function vOverview() {
     </div>
     <img class="hero-logo" src="logo.png" alt="Athens Pistols crest" onerror="this.remove()">
   </section>
+  ${upcomingPanel()}
   <div class="kpis">
     ${kpi('Points per game', f1(ta.ppg), `${plural(ta.nReal, 'game')} played on court`)}
     ${kpi('Allowed per game', f1(ta.oppg), 'Opponent points')}
@@ -1697,11 +1792,399 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') filtersEl.qu
 /* =====================================================================
    Router and page events
    ===================================================================== */
-const VIEWS = { overview: vOverview, games: vGames, game: vGame, players: vPlayers, player: vPlayer, opponents: vOpponents, opponent: vOpponent, seasons: vSeasons, season: vSeason, team: vTeam, records: vRecords, compare: vCompare };
-const NAV_OF = { game: 'games', player: 'players', opponent: 'opponents', season: 'seasons' };
+/* =====================================================================
+   Upcoming games: calendar, next-game card and match previews.
+   Scouting uses ONLY the opponent's current season (rosters change a lot).
+   ===================================================================== */
+const UP = window.PISTOLS_UPCOMING || null;
+const TEAM_ID = (UP && UP.team_id) || D.team_id || 'athens-pistols';
+const MONTHS_LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const UPG = (UP && Array.isArray(UP.games) ? UP.games : []).map((g, i) => Object.assign({}, g, { rid: g.game_id ? rid(g.game_id) : 'u' + i, ci: compInfo(g.competition) }));
+const UPBYRID = new Map(UPG.map(g => [g.rid, g]));
+let calMonth = null;
+
+function todayISO() { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+function daysUntil(iso) { const [y, m, d] = iso.split('-').map(Number); const t = new Date(); return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(t.getFullYear(), t.getMonth(), t.getDate())) / 86400000); }
+function countdown(iso) { const n = daysUntil(iso); return n === 0 ? 'Today' : n === 1 ? 'Tomorrow' : n > 1 ? `In ${n} days` : 'Played, result not in yet'; }
+function longDay(iso, withYear) { const [y, m, d] = iso.split('-').map(Number); const dt = new Date(y, m - 1, d); return `${DOW[dt.getDay()]} ${d} ${MONTHS_LONG[m - 1]}${withYear ? ' ' + y : ''}`; }
+function tlogo(url, name, size) {
+  const ini = esc(String(name || '?').replace(/[^\p{L}\p{N} ]/gu, ' ').split(/\s+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase() || '?');
+  return `<span class="tlogo${url ? '' : ' nologo'}" style="width:${size}px;height:${size}px;font-size:${size}px">${url ? `<img src="${esc(url)}" alt="" loading="lazy" onerror="this.parentNode.classList.add('nologo');this.remove()">` : ''}<b>${ini}</b></span>`;
+}
+const ourLogo = size => tlogo('logo.png', TEAM, size);
+function h2h(oppId, season) {
+  const o = OPP.get(oppId); const all = o ? o.games.filter(x => x.decided) : [];
+  const thisSeason = all.filter(x => x.season === season);
+  return { all, thisSeason, rAll: record(all), rSeason: record(thisSeason), last: all[all.length - 1] || null };
+}
+function upSorted() { return UPG.slice().sort((a, b) => ((a.date || '9999') + (a.time || '')).localeCompare((b.date || '9999') + (b.time || '')) || (a.round || 0) - (b.round || 0)); }
+function nextConfirmed() { const t = todayISO(); return upSorted().find(g => g.confirmed && g.date >= t) || null; }
+function standingOf(teamId) { const rows = (UP && UP.standings) || []; return rows.find(r => r.team_id === teamId) || null; }
+const ordinal = n => n + (n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th');
+
+/* ---------- scouting data: same preparation as our own data, kept separate */
+const SCOUT = {};
+function prepScout(s) {
+  const games = (s.games || []).slice().sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0)).map((g, i) => {
+    const decided = g.result === 'W' || g.result === 'L';
+    const forfeit = g.forfeit === true || g.status === 'forfeit';
+    const real = !forfeit && g.status === 'played' && decided && isNum(g.team_score) && isNum(g.opp_score);
+    return Object.assign({}, g, { i, decided, forfeit, real, ci: compInfo(g.competition), mg: real ? g.team_score - g.opp_score : null });
+  });
+  const byId = new Map(games.filter(g => g.game_id).map(g => [g.game_id, g]));
+  const box = new Map(), lines = [];
+  for (const raw of (s.players || [])) {
+    const g = byId.get(raw.game_id); if (!g) continue;
+    const l = Object.assign({}, raw);
+    for (const k of SK) l[k] = +l[k] || 0;
+    l.g = g; l.us = raw.is_our_team === true; l.isMvp = raw.mvp === true;
+    l.fgm = l.fg2m + l.fg3m; l.fga = l.fg2a + l.fg3a;
+    l.gs = l.pts + 0.4 * l.fgm - 0.7 * l.fga - 0.4 * (l.fta - l.ftm) + 0.7 * l.oreb + 0.3 * l.dreb + l.stl + 0.7 * l.ast + 0.7 * l.blk - l.tov;
+    l.cats = [l.pts, l.reb, l.ast, l.stl, l.blk].filter(v => v >= 10).length;
+    l.key = l.player_id || ('n-' + l.player);
+    let b = box.get(l.game_id);
+    if (!b) { b = { g, us: [], them: [] }; box.set(l.game_id, b); }
+    (l.us ? b.us : b.them).push(l); lines.push(l);
+  }
+  for (const b of box.values()) {
+    b.usT = sum(b.us); b.themT = sum(b.them);
+    b.usOK = b.us.length > 0 && b.usT.pts === b.g.team_score;
+    b.themOK = b.them.length > 0 && b.themT.pts === b.g.opp_score;
+    b.both = b.us.length > 0 && b.them.length > 0; b.full = b.usOK && b.themOK;
+  }
+  for (const l of lines) {
+    const b = box.get(l.game_id);
+    l.tm = l.us ? b.usT : b.themT; l.op = l.us ? b.themT : b.usT;
+    l.share = l.tm.min > 0 ? l.min / (l.tm.min / 5) : 0; l.ctx = b.both;
+  }
+  return { team: s.team, id: s.team_id, season: s.season, games, lines, bx: g => (g && g.game_id ? box.get(g.game_id) || null : null) };
+}
+if (UP && UP.scouting) for (const [id, s] of Object.entries(UP.scouting)) { try { SCOUT[id] = prepScout(s); } catch (e) { console.error('scouting', id, e); } }
+
+function scoutRows(S) {
+  const m = new Map();
+  for (const l of S.lines) { if (!l.us) continue; if (!m.has(l.key)) m.set(l.key, []); m.get(l.key).push(l); }
+  return [...m].map(([key, ls]) => { const nm = ls[ls.length - 1].player; return { p: { id: key, name: nm, disp: disp(nm), short: short(nm) }, ls, a: agg(ls) }; });
+}
+function sidesOf(games, bx, flip) {
+  const out = [];
+  for (const g of games) { const b = bx(g); if (!b || !b.full) continue; out.push(flip ? { gid: g.game_id, T: b.themT, O: b.usT } : { gid: g.game_id, T: b.usT, O: b.themT }); }
+  return out;
+}
+function sideMetrics(sides) {
+  const T = zero(), O = zero(); let n = 0;
+  for (const s of sides) { addT(T, s.T); addT(O, s.O); n++; }
+  const pT = poss(T), pO = poss(O);
+  return { n, ppg: ratio(T.pts, n), oppg: ratio(O.pts, n), pace: n ? (pT + pO) / 2 / n : null, ortg: ratio(100 * T.pts, pT), drtg: ratio(100 * O.pts, pO),
+    efg: ratio(T.fgm + 0.5 * T.fg3m, T.fga), tpar: ratio(T.fg3a, T.fga), p3: ratio(T.fg3m, T.fg3a), p2: ratio(T.fg2m, T.fg2a), ftr: ratio(T.fta, T.fga), ftp: ratio(T.ftm, T.fta),
+    tovp: ratio(T.tov, T.fga + 0.44 * T.fta + T.tov), orb: ratio(T.oreb, T.oreb + O.dreb), drb: ratio(T.dreb, T.dreb + O.oreb), astr: ratio(T.ast, T.fgm),
+    oefg: ratio(O.fgm + 0.5 * O.fg3m, O.fga), otov: ratio(O.tov, O.fga + 0.44 * O.fta + O.tov), stl: ratio(T.stl, n), blk: ratio(T.blk, n), reb: ratio(T.reb, n) };
+}
+/* the "league" comparison: every other team in the current-season box scores we have (their opponents, us, our opponents) */
+function scoutContext(S) {
+  const theirSides = sidesOf(S.games, S.bx, false);
+  const seen = new Set(S.games.map(g => g.game_id));
+  const ourGames = GAMES.filter(g => g.season === S.season);
+  const ourSides = sidesOf(ourGames, boxOf, false);
+  const base = sidesOf(S.games, S.bx, true).concat(ourSides.filter(s => !seen.has(s.gid)), sidesOf(ourGames.filter(g => !seen.has(g.game_id)), boxOf, true));
+  return { M: sideMetrics(theirSides), B: sideMetrics(base), U: sideMetrics(ourSides), ourGames };
+}
+const HOWTO = [
+  { k: 'pace', lab: 'Pace (possessions per game)', fmt: f1, good: 0, thr: 4 },
+  { k: 'ortg', lab: 'Points per 100 possessions', fmt: f1, good: 1, thr: 5 },
+  { k: 'drtg', lab: 'Allowed per 100 possessions', fmt: f1, good: -1, thr: 5 },
+  { k: 'efg', lab: 'Shooting (eFG%)', fmt: fp, good: 1, thr: 0.03 },
+  { k: 'p2', lab: '2-point accuracy', fmt: fp, good: 1, thr: 0.04 },
+  { k: 'tpar', lab: 'Share of shots from three', fmt: fp, good: 0, thr: 0.06 },
+  { k: 'p3', lab: '3-point accuracy', fmt: fp, good: 1, thr: 0.03 },
+  { k: 'ftr', lab: 'Free throws per 100 shots', fmt: v => isNum(v) ? (v * 100).toFixed(1) : NA, good: 1, thr: 0.08 },
+  { k: 'ftp', lab: 'Free throw accuracy', fmt: fp, good: 1, thr: 0.06 },
+  { k: 'tovp', lab: 'Turnovers per 100 plays', fmt: v => isNum(v) ? (v * 100).toFixed(1) : NA, good: -1, thr: 0.03 },
+  { k: 'orb', lab: 'Offensive rebounding (ORB%)', fmt: fp, good: 1, thr: 0.04 },
+  { k: 'drb', lab: 'Defensive rebounding (DRB%)', fmt: fp, good: 1, thr: 0.04 },
+  { k: 'astr', lab: 'Baskets that are assisted', fmt: fp, good: 0, thr: 0.08 },
+  { k: 'oefg', lab: 'Opponents’ shooting (eFG%)', fmt: fp, good: -1, thr: 0.03 },
+  { k: 'otov', lab: 'Turnovers forced per 100 plays', fmt: v => isNum(v) ? (v * 100).toFixed(1) : NA, good: 1, thr: 0.03 },
+  { k: 'stl', lab: 'Steals per game', fmt: f1, good: 1, thr: 2 },
+  { k: 'blk', lab: 'Blocks per game', fmt: f1, good: 1, thr: 1 }
+];
+function verdict(h, them, base) {
+  if (!isNum(them) || !isNum(base)) return { cls: 'v-avg', txt: 'No data' };
+  const d = them - base;
+  if (h.good === 0) return Math.abs(d) >= h.thr ? { cls: 'v-style', txt: d > 0 ? 'High' : 'Low' } : { cls: 'v-avg', txt: 'Average' };
+  if (d * h.good >= h.thr) return { cls: 'v-str', txt: 'Strength' };
+  if (d * h.good <= -h.thr) return { cls: 'v-weak', txt: 'Weakness' };
+  return { cls: 'v-avg', txt: 'Average' };
+}
+function rolesOf(r, teamPts, isTop) {
+  const a = r.a, out = [];
+  const share = ratio(a.pts, teamPts);
+  if (isTop && share >= 0.25) out.push(['Go-to scorer', 1]);
+  else if (pg(a, 'pts') >= 12) out.push(['Scorer', 1]);
+  if (pg(a, 'fg3m') >= 1.5 && a.p3 >= 0.3) out.push(['Shooter', 1]);
+  else if (pg(a, 'fg3a') >= 3 && isNum(a.p3) && a.p3 < 0.25) out.push(['Shoots threes, misses most', 0]);
+  if (pg(a, 'oreb') >= 3) out.push(['Offensive rebounder', 1]);
+  else if (pg(a, 'reb') >= 8) out.push(['Rebounder', 1]);
+  if (pg(a, 'ast') >= 3) out.push(['Playmaker', 1]);
+  if (pg(a, 'blk') >= 1) out.push(['Rim protector', 1]);
+  if (pg(a, 'stl') >= 2) out.push(['Ball hawk', 1]);
+  if (pg(a, 'fta') >= 4) out.push(['Gets to the line', 0]);
+  if (a.fta >= 6 && isNum(a.ftp) && a.ftp < 0.55) out.push(['Weak free throws', 0]);
+  if (pg(a, 'tov') >= 3) out.push(['Turnover prone', 0]);
+  if (a.mvp >= 2) out.push([`${a.mvp}× MVP`, 1]);
+  return out;
+}
+function playerTip(r) {
+  const a = r.a, t = [];
+  if (pg(a, 'fg3a') >= 3 && a.p3 >= 0.3) t.push(`close out hard: ${f1(pg(a, 'fg3m'))} threes a game at ${fp0(a.p3)}`);
+  else if (pg(a, 'fg2a') >= 6 && pg(a, 'fg3a') < 2) t.push(`does his damage inside (${fp0(a.p2)} on twos): wall up and send help from the weak side`);
+  if (pg(a, 'oreb') >= 2.5) t.push(`box him out on every shot (${f1(pg(a, 'oreb'))} offensive rebounds a game)`);
+  if (pg(a, 'ast') >= 3) t.push(`pressure him early and deny the ball: he runs their offence (${f1(pg(a, 'ast'))} assists)`);
+  if (pg(a, 'fta') >= 4) t.push(`stay down on fakes, he draws ${f1(pg(a, 'fta'))} free throws a game`);
+  if (a.fta >= 6 && a.ftp < 0.55) t.push(`only ${fp0(a.ftp)} at the line: a foul is better than an easy layup`);
+  if (pg(a, 'tov') >= 3) t.push(`turnover prone (${f1(pg(a, 'tov'))} a game): trap him`);
+  if (pg(a, 'fg3a') >= 3 && isNum(a.p3) && a.p3 < 0.25) t.push(`shoots ${f1(pg(a, 'fg3a'))} threes a game but makes only ${fp0(a.p3)}: give him the outside shot, take away the drive`);
+  if (pg(a, 'stl') >= 2) t.push(`quick hands (${f1(pg(a, 'stl'))} steals a game): protect the ball and avoid lazy passes near him`);
+  if (pg(a, 'dreb') >= 6 && pg(a, 'oreb') < 2.5) t.push(`owns their defensive glass (${f1(pg(a, 'dreb'))} defensive rebounds): put a body on him when we shoot`);
+  if (!t.length) t.push('play solid, disciplined defence and keep him off his preferred spots');
+  return t.slice(0, 3).join('; ');
+}
+function gamePlan(g, S, ctx, rows, q, hh) {
+  const { M, B, U } = ctx, D = [], O = [], N = [];
+  const nm = esc(S.team);
+  const teamPts = rows.reduce((s, r) => s + r.a.pts, 0);
+  const boxN = S.games.filter(x => { const b = S.bx(x); return b && b.us.length; }).length;
+  const regular = rows.filter(r => r.a.gp >= Math.max(1, Math.ceil(boxN * 0.4))).sort((a, b) => pg(b.a, 'pts') - pg(a.a, 'pts'));
+  const top = regular[0], second = regular[1];
+  const P = (v, d) => isNum(v) ? (v * 100).toFixed(d == null ? 0 : d) + '%' : NA;
+  // defence
+  if (top) {
+    const sh = ratio(top.a.pts, teamPts);
+    if (sh >= 0.25) D.push(`Stop <b>${esc(top.p.disp)}</b>: ${f1(pg(top.a, 'pts'))} points a game, ${P(sh)} of their scoring. Put your best defender on him, send help early and make the others beat you.`);
+    else if (second && ratio(top.a.pts + second.a.pts, teamPts) >= 0.45) D.push(`Their scoring runs through <b>${esc(top.p.disp)}</b> and <b>${esc(second.p.disp)}</b> (${P(ratio(top.a.pts + second.a.pts, teamPts))} of their points together). Make them work for every catch.`);
+    else D.push(`Balanced attack: nobody scores more than ${P(sh)} of their points, so stay disciplined on switches and rotations instead of overloading one player.`);
+  }
+  if (isNum(M.tpar) && isNum(B.tpar) && M.tpar >= B.tpar + 0.06) {
+    if (M.p3 >= B.p3 + 0.03) D.push(`They live behind the arc: ${P(M.tpar)} of their shots are threes and they make ${P(M.p3)} (league ${P(B.p3)}). Close out hard and run their shooters off the line.`);
+    else D.push(`They take a lot of threes (${P(M.tpar)} of shots) but make only ${P(M.p3)}. Contest without fouling, protect the paint and rebound the long misses.`);
+  } else if (isNum(M.tpar) && isNum(B.tpar) && M.tpar <= B.tpar - 0.06) D.push(`They rarely shoot threes (${P(M.tpar)} of shots vs league ${P(B.tpar)}): pack the paint and sag off their non-shooters.`);
+  if (M.ortg <= B.ortg - 5) D.push(`Their offence struggles: ${f1(M.ortg)} points per 100 possessions (league ${f1(B.ortg)}). Stay patient, avoid cheap fouls and easy transition baskets, and make them score over a set defence.`);
+  else if (M.ortg >= B.ortg + 5) D.push(`Dangerous offence: ${f1(M.ortg)} points per 100 possessions (league ${f1(B.ortg)}). Communicate on every screen and don’t let the game turn into a shootout.`);
+  if (M.orb >= B.orb + 0.04) D.push(`They crash the offensive glass: ${P(M.orb)} of their misses come back to them (league ${P(B.orb)}). Box out on every shot; guards help on the boards.`);
+  if (M.tovp >= B.tovp + 0.03) D.push(`They are loose with the ball: ${P(M.tovp, 1)} of their plays end in a turnover. Pressure the ball handler and jump the passing lanes.`);
+  else if (M.tovp <= B.tovp - 0.03) D.push(`They protect the ball well (${P(M.tovp, 1)} turnovers per play). Don’t gamble for steals; make them work deep into the shot clock.`);
+  if (M.ftr >= B.ftr + 0.08) D.push(`They get to the line a lot (${(M.ftr * 100).toFixed(0)} free throws per 100 shots). Defend with your feet, hands up, no reaching.`);
+  if (isNum(M.ftp) && M.ftp < 0.6 && M.ftr > 0) N.push(`They shoot only ${P(M.ftp)} from the free-throw line. In a close finish, fouling is a real option.`);
+  if (M.pace >= B.pace + 4) D.push(`They play fast (${f1(M.pace)} possessions a game, league ${f1(B.pace)}): get back on defence after every shot and match up early.`);
+  // offence
+  if (M.drtg >= B.drtg + 5) O.push(`Their defence leaks points: ${f1(M.drtg)} allowed per 100 possessions (league ${f1(B.drtg)}). Be aggressive from the start.`);
+  else if (M.drtg <= B.drtg - 5) O.push(`Tough defence: only ${f1(M.drtg)} allowed per 100 possessions (league ${f1(B.drtg)}). Expect a grind; value every possession.`);
+  if (M.oefg >= B.oefg + 0.03) O.push(`Teams shoot well against them (${P(M.oefg)} eFG): take open shots with confidence.`);
+  else if (M.oefg <= B.oefg - 0.03) O.push(`They contest shots well (opponents ${P(M.oefg)} eFG): move the ball for the best shot, not the first one.`);
+  if (M.drb <= B.drb - 0.04) O.push(`They give up offensive rebounds (they grab only ${P(M.drb)} of the misses they should own). Send a second player to the glass${isNum(U.orb) && U.orb >= B.orb ? `: our own ${P(U.orb)} offensive rebounding is a weapon here` : ''}.`);
+  if (M.drb >= B.drb + 0.04) O.push(`They own their defensive glass (${P(M.drb)} of the rebounds they should get, league ${P(B.drb)})${isNum(U.orb) ? ` and we grab ${P(U.orb)} of our misses` : ''}: don’t over-commit to offensive rebounds, get back on defence and work for good first shots.`);
+  if (M.otov >= B.otov + 0.03 || M.stl >= B.stl + 2) O.push(`They force turnovers (${P(M.otov, 1)} of opponents’ plays, ${f1(M.stl)} steals a game). Simple passes, two hands on the ball, beat pressure with quick ball movement${isNum(U.tovp) && U.tovp > B.tovp ? `. We turn it over on ${P(U.tovp, 1)} of plays ourselves, so this is the key battle` : ''}.`);
+  if (M.blk >= B.blk + 1) O.push(`Rim protection: ${f1(M.blk)} blocks a game. Use pump fakes, finish off the glass and kick out to open shooters.`);
+  if (M.pace <= B.pace - 4) O.push(`They slow the game down (${f1(M.pace)} possessions a game): push the ball after every rebound for easy baskets before their defence sets.`);
+  // quarters
+  if (q && q.n) {
+    const lab = ['1st', '2nd', '3rd', '4th'];
+    if (q.mg[0] >= 3) N.push(`Fast starters: they win 1st quarters by ${f1(q.mg[0])} on average. Be sharp from the tip.`);
+    if (q.mg[3] <= -3) N.push(`They fade late: they lose 4th quarters by ${f1(-q.mg[3])} on average. Stay close and push in the final quarter.`);
+    else if (q.mg[3] >= 3) N.push(`Strong finishers: +${f1(q.mg[3])} in 4th quarters. Protect any lead late and keep composure.`);
+    const worst = q.mg.indexOf(Math.min.apply(null, q.mg));
+    if (q.mg[worst] < 0 && worst !== 3) N.push(`Their weakest stretch is the ${lab[worst]} quarter (${fs1(q.mg[worst])} on average).`);
+  }
+  // context
+  const close = record(S.games.filter(x => x.real && Math.abs(x.mg) <= 5));
+  if (close.n) N.push(`In close games (5 points or fewer) they are ${recTxt(close)} this season.`);
+  const venue = g.home_away === 'Home' ? 'Away' : 'Home';
+  const rv = record(S.games.filter(x => x.home_away === venue));
+  if (rv.n) N.push(`They are ${recTxt(rv)} ${venue === 'Away' ? 'away from home' : 'at home'} this season, and this game is ${venue === 'Away' ? 'their away game' : 'at their place'}.`);
+  if (hh.rSeason.n) N.push(`This season we are ${recTxt(hh.rSeason)} against them. Last meeting: ${hh.last.result === 'W' ? 'won' : 'lost'} ${hh.last.team_score}–${hh.last.opp_score} on ${fdate(hh.last.date, 1)}.`);
+  if (!D.length) D.push(`No single weapon stands out on their offence: contest every shot and finish each defensive possession with a rebound.`);
+  if (!O.length) O.push(`No obvious hole in their defence: share the ball, attack mismatches and take care of it.`);
+  return { D, O, N, regular };
+}
+function quarterProfile(S) {
+  const r = S.games.filter(x => x.real && isNum(x.team_q1) && isNum(x.opp_q1));
+  const qs = ['q1', 'q2', 'q3', 'q4'];
+  if (!r.length) return { n: 0 };
+  const sc = qs.map(q => ratio(r.reduce((s, x) => s + (+x['team_' + q] || 0), 0), r.length));
+  const al = qs.map(q => ratio(r.reduce((s, x) => s + (+x['opp_' + q] || 0), 0), r.length));
+  return { n: r.length, sc, al, mg: sc.map((v, i) => v - al[i]) };
+}
+function chScoutQuarters(S, q) {
+  return t => ({ type: 'bar', data: { labels: ['1st', '2nd', '3rd', '4th'], datasets: [
+    Object.assign({ label: S.team + ' scored', data: q.sc, backgroundColor: t.them }, BAR),
+    Object.assign({ label: 'Allowed', data: q.al, backgroundColor: t.loss }, BAR)
+  ] }, options: opts(t, { plugins: { legend: { display: true }, tooltip: { callbacks: { title: it => it[0].label + ' quarter', label: c => ` ${c.dataset.label}: ${f1(c.parsed.y)} points`, footer: it => `Average margin ${fs1(q.mg[it[0].dataIndex])}` } } } }) });
+}
+
+/* ---------- Overview panel: calendar + next game + coming up */
+function calendarHTML(month) {
+  const [y, m] = month.split('-').map(Number);
+  const first = new Date(y, m - 1, 1), startDow = (first.getDay() + 6) % 7, days = new Date(y, m, 0).getDate();
+  const prev = m === 1 ? `${y - 1}-12` : `${y}-${String(m - 1).padStart(2, '0')}`, next = m === 12 ? `${y + 1}-01` : `${y}-${String(m + 1).padStart(2, '0')}`;
+  const today = todayISO();
+  const up = new Map(), past = new Map();
+  for (const g of UPG) if (g.date && g.date.startsWith(month)) up.set(g.date, g);
+  for (const g of GAMES) if (g.decided && g.date.startsWith(month)) { if (!past.has(g.date)) past.set(g.date, []); past.get(g.date).push(g); }
+  let cells = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(d => `<div class="cal-dow">${d}</div>`).join('');
+  for (let i = 0; i < startDow; i++) cells += '<div class="cal-day blank"></div>';
+  for (let d = 1; d <= days; d++) {
+    const iso = `${month}-${String(d).padStart(2, '0')}`, cls = iso === today ? ' today' : '';
+    const u = up.get(iso), p = past.get(iso);
+    if (u) cells += `<a class="cal-day next${cls}" href="#match-${u.rid}" title="${esc(`${u.home_away === 'Home' ? 'vs' : 'at'} ${u.opponent}${u.time ? ' · ' + u.time : ''}${u.gym ? ' · ' + u.gym.name : ''}`)}"><span class="d">${d}</span><span class="ev">${tlogo(u.logo, u.opponent, 22)}<span class="evt">${esc(u.time || '')}</span></span></a>`;
+    else if (p) { const g = p[p.length - 1]; cells += `<a class="cal-day${cls}" href="#game-${g.rid}" title="${esc(`${vsTxt(g)} · ${g.result} ${isNum(g.team_score) ? g.team_score + '–' + g.opp_score : ''}`)}"><span class="d">${d}</span><span class="ev"><span class="res res-${g.result}">${g.result}</span><span class="evt">${esc(g.opponent)}</span></span></a>`; }
+    else cells += `<div class="cal-day${cls}"><span class="d">${d}</span></div>`;
+  }
+  return `<div class="cal"><div class="cal-head"><b>${MONTHS_LONG[m - 1]} ${y}</b><div class="cal-nav"><button type="button" data-cal="${prev}" aria-label="Previous month">‹</button><button type="button" data-cal="${todayISO().slice(0, 7)}" aria-label="This month" style="width:auto;padding:0 10px;font-size:12px;font-weight:700">Today</button><button type="button" data-cal="${next}" aria-label="Next month">›</button></div></div>
+    <div class="cal-grid">${cells}</div>
+    <div class="cal-legend"><span><i style="background:var(--accent)"></i>Upcoming game</span><span><i style="background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line)"></i>Played (click for the box score)</span></div></div>`;
+}
+function upcomingPanel() {
+  if (!UPG.length) return '';
+  const nx = nextConfirmed();
+  const month = calMonth || (nx ? nx.date.slice(0, 7) : todayISO().slice(0, 7));
+  let card = '';
+  if (nx) {
+    const st = standingOf(nx.opponent_id), hh = h2h(nx.opponent_id, nx.season), S = SCOUT[nx.opponent_id];
+    const sr = S ? record(S.games) : null;
+    card = `<div class="nextg">
+      <div class="ng-top"><p class="eyebrow">Next game${nx.round ? ` · Matchday ${nx.round}` : ''}</p><span class="ng-count">${countdown(nx.date)}</span></div>
+      <div class="ng-vs">${ourLogo(44)}<span class="x">${nx.home_away === 'Home' ? 'VS' : 'AT'}</span>${tlogo(nx.logo, nx.opponent, 56)}<div class="n"><b>${esc(nx.opponent)}</b><span>${nx.home_away === 'Home' ? 'Home' : 'Away'} · ${esc(nx.ci.name)}</span></div></div>
+      <div class="ng-when">${longDay(nx.date)}${nx.time ? ' · ' + esc(nx.time) : ''}</div>
+      <div class="ng-gym"><div><b>${esc(nx.gym.name)}</b>${nx.gym.address ? `<br><span>${esc(nx.gym.address)}</span>` : ''}</div><a class="maplink" href="${esc(nx.gym.maps_url)}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
+      <div class="ng-facts">${sr ? `<span>Their season ${recTxt(sr)}</span>` : ''}${st ? `<span>${ordinal(st.pos)} in the league (${st.w}–${st.l})</span>` : ''}<span>${hh.rAll.n ? `All-time vs them ${recTxt(hh.rAll)}` : 'First ever meeting'}</span></div>
+      <a class="btn-cta" href="#match-${nx.rid}">Match preview and game plan →</a></div>`;
+  } else card = `<div class="note">No confirmed date yet for the next game. It appears here as soon as basketaki sets the date and gym.</div>`;
+  const rest = upSorted().filter(g => !nx || g.rid !== nx.rid);
+  const list = rest.map(g => `<a class="upitem" href="#match-${g.rid}">${tlogo(g.logo, g.opponent, 34)}<div style="min-width:0"><b>${esc(g.opponent)}</b><span class="meta">${g.round ? `Matchday ${g.round} · ` : ''}${g.home_away === 'Home' ? 'Home' : 'Away'} · ${esc(g.ci.short)}</span></div>${g.confirmed ? `<span class="when">${fdate(g.date)}${g.time ? ' ' + esc(g.time) : ''}</span>` : `<span class="tbc">${g.date ? fdate(g.date) + ' · gym TBC' : 'Date TBC'}</span>`}</a>`).join('');
+  return panel('Upcoming games', `<div class="up-grid"><div>${calendarHTML(month)}</div><div style="display:grid;gap:14px;min-width:0">${card}${rest.length ? `<div><p class="eyebrow" style="color:var(--muted)">Coming up</p><div class="uplist">${list}</div></div>` : ''}</div></div>`,
+    { sub: `From the basketaki schedule, checked every morning${UP && UP.scraped_at ? ` · last change ${fdate(String(UP.scraped_at).slice(0, 10), 1)}` : ''}.` });
+}
+
+/* ---------- Match preview page */
+function vsGeneric(nameA, nameB, rows) {
+  return `<div class="vs"><div class="vs-head"><span>${esc(nameA)}</span><span></span><span>${esc(nameB)}</span></div>${rows.map(([lab, a, b, fmt, low]) => {
+    const mx = Math.max(Math.abs(a || 0), Math.abs(b || 0)) || 1;
+    const aw = isNum(a) ? Math.max(0, a) / mx * 100 : 0, bw = isNum(b) ? Math.max(0, b) / mx * 100 : 0;
+    const ab = isNum(a) && isNum(b) && (low ? a < b : a > b), bb = isNum(a) && isNum(b) && (low ? b < a : b > a);
+    return `<div class="vs-row"><div class="vs-side l"><span class="vs-v${ab ? ' better' : ''}">${fmt(a)}</span><span class="vs-bar"><i style="width:${aw.toFixed(1)}%"></i></span></div><div class="vs-lbl">${lab}</div><div class="vs-side r"><span class="vs-bar"><i style="width:${bw.toFixed(1)}%"></i></span><span class="vs-v${bb ? ' better' : ''}">${fmt(b)}</span></div></div>`;
+  }).join('')}</div>`;
+}
+function vMatch(arg) {
+  const g = UPBYRID.get(arg); if (!g) return notFound('This game is no longer on the schedule', '#overview');
+  const hh = h2h(g.opponent_id, g.season), st = standingOf(g.opponent_id);
+  const home = g.home_away === 'Home';
+  const info = [];
+  info.push(`<div><small>Date</small><b>${g.date ? longDay(g.date, true) : 'Not confirmed yet'}</b></div>`);
+  info.push(`<div><small>Time</small><b>${g.time ? esc(g.time) : 'Not confirmed yet'}</b></div>`);
+  info.push(`<div><small>Gym</small><b>${g.gym ? esc(g.gym.name) : 'Not confirmed yet'}</b>${g.gym && g.gym.address ? `<span style="color:var(--band-muted);font-size:13px">${esc(g.gym.address)}</span>` : ''}${g.gym ? `<a class="maplink" href="${esc(g.gym.maps_url)}" target="_blank" rel="noopener">Open in Google Maps ↗</a>` : ''}</div>`);
+  info.push(`<div><small>Competition</small><b>${esc(g.ci.name)} ${esc(seasonLabel(g.season))}${g.round ? ` · Matchday ${g.round}` : ''}</b></div>`);
+  let html = `<div class="gnav"><span><a href="#overview">← Overview</a></span><span>${g.url ? `<a href="${esc(g.url)}" target="_blank" rel="noopener">This game on basketaki ↗</a>` : ''}</span></div>
+  <section class="mh">
+    <div class="sb-meta">${g.confirmed ? `Match preview · ${countdown(g.date)}` : 'Upcoming game · not confirmed yet'}</div>
+    <div class="mh-teams">
+      <div class="mh-team">${ourLogo(64)}<b>${esc(TEAM)}</b></div>
+      <div class="mh-mid"><span class="vs">${home ? 'VS' : 'AT'}</span><span class="small" style="color:var(--band-muted)">${home ? 'Home' : 'Away'}</span></div>
+      <div class="mh-team r"><b>${esc(g.opponent)}</b>${tlogo(g.logo, g.opponent, 64)}</div>
+    </div>
+    <div class="mh-info">${info.join('')}</div>
+  </section>`;
+  const h2hLine = hh.rAll.n ? `All-time against ${esc(g.opponent)}: <b>${recTxt(hh.rAll)}</b>${hh.rSeason.n ? `, this season <b>${recTxt(hh.rSeason)}</b>` : ''}. Last meeting: ${gameLink(hh.last, `${hh.last.result === 'W' ? 'won' : 'lost'} ${hh.last.team_score}–${hh.last.opp_score}`)} on ${fdate(hh.last.date, 1)}.` : `We have never played ${esc(g.opponent)} before.`;
+  if (!g.confirmed) {
+    return html + `<p class="note">${g.date ? 'The gym is' : 'The date, time and gym are'} not confirmed on basketaki yet. The full match preview and game plan appear here automatically once ${g.date ? 'it is' : 'they are'} set (the site checks every morning).</p>
+    ${panel('What we know', `<div class="facts">${fact('Opponent', esc(g.opponent), st ? `${ordinal(st.pos)} in the league · ${st.w}–${st.l}` : '')}${fact('Where', home ? 'Home game' : 'Away game', esc(g.ci.name))}${fact('Matchday', g.round || NA, esc(seasonLabel(g.season)))}</div><p>${h2hLine}</p>`)}`;
+  }
+  const S = SCOUT[g.opponent_id];
+  if (!S) return html + `<p class="note">The scouting data for ${esc(g.opponent)} is not available yet. It is added by the next daily update.</p><p>${h2hLine}</p>`;
+
+  const ctx = scoutContext(S), rows = scoutRows(S), q = quarterProfile(S);
+  const R = teamAgg(S.games, S.bx), plan = gamePlan(g, S, ctx, rows, q, hh);
+  const { M, B, U } = ctx;
+  const teamPts = rows.reduce((s, r) => s + r.a.pts, 0);
+  const boxN = S.games.filter(x => { const b = S.bx(x); return b && b.us.length; }).length;
+  const form = S.games.filter(x => x.decided).slice(-6);
+  const streak = (() => { const c = S.games.filter(x => x.decided); let n = 0; const last = c.length ? c[c.length - 1].result : null; for (let i = c.length - 1; i >= 0 && c[i].result === last; i--) n++; return last ? `${last}${n}` : NA; })();
+
+  html += panel(`${esc(S.team)} this season`, `<div class="kpis">
+      ${kpi('Record', recTxt(R), `${plural(R.n, 'game')} · all competitions`, R.w > R.l ? 'hot' : '')}
+      ${kpi('League position', st ? ordinal(st.pos) : NA, st ? `${st.w}–${st.l} in ${esc((UP.tournament || {}).title || 'the league')}` : '')}
+      ${kpi('Points per game', f1(R.ppg), `Allowed ${f1(R.oppg)}`)}
+      ${kpi('Average margin', fs1(R.mg), plural(R.nReal, 'game') + ' on court')}
+      ${kpi('Streak', streak, 'Current run')}
+      ${kpi('Head to head', hh.rSeason.n ? recTxt(hh.rSeason) : (hh.rAll.n ? recTxt(hh.rAll) : '0–0'), hh.rSeason.n ? 'This season' : (hh.rAll.n ? 'All-time (no meeting this season)' : 'First meeting'))}
+    </div>
+    <div><p class="eyebrow" style="color:var(--muted)">Recent form (oldest to newest)</p><div class="formstrip">${form.map(x => `<span class="${x.result}" title="${esc(`${fdate(x.date)} · ${x.home_away === 'Home' ? 'vs' : 'at'} ${x.opponent} · ${x.team_score}–${x.opp_score} · ${x.ci.short}`)}">${x.result}</span>`).join('')}</div></div>
+    <p>${h2hLine}</p>`, { sub: `Current season only (${esc(seasonLabel(S.season))}): ${plural(S.games.length, 'game')}, ${plural(boxN, 'box score')}. Older seasons are left out because rosters change.` });
+
+  // game plan first: it's what matters most
+  html += panel('Game plan', `<div class="plan">
+      <div><h3><i></i>On defence</h3><ul>${plan.D.map(x => `<li>${x}</li>`).join('')}</ul></div>
+      <div><h3><i></i>On offence</h3><ul>${plan.O.map(x => `<li>${x}</li>`).join('')}</ul></div>
+      <div><h3><i></i>Good to know</h3><ul>${plan.N.map(x => `<li>${x}</li>`).join('') || '<li>Nothing unusual in their results so far.</li>'}</ul></div>
+    </div>`, { sub: 'Generated from their box scores, compared with the rest of the league this season.' });
+
+  // players to watch
+  const watch = plan.regular.slice(0, 3);
+  const pc = [
+    { k: 'name', label: 'Player', cls: 'txt', v: r => r.p.disp, html: r => `${esc(r.p.disp)}<div class="roles">${rolesOf(r, teamPts, r === plan.regular[0]).map(([t, h]) => `<span class="role${h ? ' hot' : ''}">${esc(t)}</span>`).join('')}</div>` },
+    P.gp, P.pg('min', 'MIN'), P.pg('pts', 'PTS'), { k: 'share', label: 'Share', title: 'Share of the team’s points', v: r => ratio(r.a.pts, teamPts), f: fp0 },
+    P.pg('reb', 'REB'), P.pg('oreb', 'OREB'), P.pg('ast', 'AST'), P.pg('stl', 'STL'), P.pg('blk', 'BLK'), P.pg('tov', 'TOV'), P.pg('fg3m', '3PM', '3-pointers made per game'),
+    P.pct('p3', '3P%'), P.pct('ftp', 'FT%'), P.pct('ts', 'TS%'), P.pg('eff', 'EFF'), P.tot('mvp', 'MVP')
+  ];
+  html += panel('Players to watch', `<div class="grid-3">${watch.map(r => `<div class="watch"><div class="watch-h"><b>${esc(r.p.disp)}</b><span>${f1(pg(r.a, 'pts'))}</span></div>
+      <div class="mini"><span><b>${f1(pg(r.a, 'reb'))}</b> reb</span><span><b>${f1(pg(r.a, 'ast'))}</b> ast</span><span><b>${fp0(r.a.ts)}</b> TS</span><span><b>${r.a.gp}</b> games</span></div>
+      <div class="roles">${rolesOf(r, teamPts, r === plan.regular[0]).map(([t, h]) => `<span class="role${h ? ' hot' : ''}">${esc(t)}</span>`).join('')}</div>
+      <p>${esc(playerTip(r)).replace(/^./, c => c.toUpperCase())}.</p></div>`).join('')}</div>` +
+    table('t-scout-players', pc, rows, { sort: 'pg_pts', desc: true, scroll: true }),
+    { sub: `Per game this season. "Players to watch" are their top scorers among players with at least ${plural(Math.max(1, Math.ceil(boxN * 0.4)), 'game')}.` });
+
+  // how they play
+  const hrow = HOWTO.map(h => { const v = verdict(h, M[h.k], B[h.k]); return `<tr><td class="txt">${esc(h.lab)}</td><td class="strong">${h.fmt(M[h.k])}</td><td>${h.fmt(B[h.k])}</td><td>${h.fmt(U[h.k])}</td><td class="txt"><span class="verdict ${v.cls}">${v.txt}</span></td></tr>`; }).join('');
+  html += panel('How they play', `<div class="tbl-wrap"><table class="tbl"><thead><tr><th class="txt">Measure</th><th>${esc(S.team)}</th><th>League</th><th>${esc(TEAM)}</th><th class="txt">For them</th></tr></thead><tbody>${hrow}</tbody></table></div>`,
+    { sub: `Their ${plural(M.n, 'complete box score')} vs the league average of the other teams in this season's box scores we have (${plural(B.n, 'team game')}). Strength or Weakness is from their side; High or Low describes style.` });
+
+  // matchup + quarters
+  html += `<div class="grid-2">
+    ${panel('Matchup', vsGeneric(TEAM, S.team, [
+      ['Points per game', U.ppg, M.ppg, f1], ['Allowed per game', U.oppg, M.oppg, f1, true], ['Per 100 poss.', U.ortg, M.ortg, f1], ['Allowed /100', U.drtg, M.drtg, f1, true],
+      ['eFG%', U.efg, M.efg, fp0], ['3P%', U.p3, M.p3, fp0], ['Turnovers /100', isNum(U.tovp) ? U.tovp * 100 : null, isNum(M.tovp) ? M.tovp * 100 : null, f1, true],
+      ['Off. reb. %', U.orb, M.orb, fp0], ['Def. reb. %', U.drb, M.drb, fp0], ['FT%', U.ftp, M.ftp, fp0], ['Pace', U.pace, M.pace, f1]
+    ]), { sub: `Both teams this season, games with complete box scores (${plural(U.n, 'game')} for us, ${plural(M.n, 'game')} for them). The better value is highlighted.` })}
+    ${q.n ? panel('Quarter by quarter', chart('c-scout-q', 'Their average points scored and allowed per quarter', chScoutQuarters(S, q), 'short') + `<div class="facts">${['1st', '2nd', '3rd', '4th'].map((l, i) => fact(l + ' quarter', fs1(q.mg[i]), `${f1(q.sc[i])} scored · ${f1(q.al[i])} allowed`)).join('')}</div>`, { sub: `Their average per quarter in ${plural(q.n, 'game')} this season.` }) : ''}
+  </div>`;
+
+  // league table
+  if (UP.standings && UP.standings.length) {
+    const tr = UP.standings.map(r => `<tr class="${r.team_id === TEAM_ID ? 'us-row' : r.team_id === g.opponent_id ? 'them-row' : ''}"><td class="num">${r.pos}</td><td class="txt">${tlogo(r.logo, r.team, 20)} ${esc(r.team)}</td><td>${r.gp}</td><td>${r.w}</td><td>${r.l}</td><td>${r.pf}</td><td>${r.pa}</td><td>${fsi(r.diff)}</td><td class="txt">${esc(r.streak || '')}</td></tr>`).join('');
+    html += panel('League table', `<div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th class="txt">Team</th><th>GP</th><th>W</th><th>L</th><th>PF</th><th>PA</th><th>+/−</th><th class="txt">Streak</th></tr></thead><tbody>${tr}</tbody></table></div>`,
+      { sub: `${esc((UP.tournament || {}).title || '')} · <a href="${esc((UP.tournament || {}).url || '#')}" target="_blank" rel="noopener">standings on basketaki ↗</a>` });
+  }
+
+  // their games this season
+  const gcols = [
+    { k: 'date', label: 'Date', cls: 'txt', v: x => x.date, html: x => x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${fdate(x.date)}</a>` : fdate(x.date) },
+    { k: 'opp', label: 'Opponent', cls: 'txt', v: x => x.opponent, f: v => esc(v) },
+    { k: 'ha', label: 'H/A', cls: 'txt', v: x => x.home_away, f: v => esc(v) },
+    { k: 'res', label: 'Result', cls: 'txt', v: x => x.result || '', html: x => resBadge(x) },
+    { k: 'score', label: 'Score', v: x => x.team_score, html: x => scoreTxt(x) },
+    { k: 'mg', label: '+/−', v: x => x.mg, f: fsi },
+    { k: 'comp', label: 'Competition', cls: 'txt', v: x => x.ci.short, f: v => esc(v) },
+    { k: 'top', label: 'Top scorer', cls: 'txt', v: x => { const b = S.bx(x); return b && b.us.length ? Math.max.apply(null, b.us.map(l => l.pts)) : null; }, html: x => { const b = S.bx(x); if (!b || !b.us.length) return `<span class="muted">${NA}</span>`; const l = b.us.reduce((m, y) => (y.pts > m.pts ? y : m), b.us[0]); return `${esc(short(l.player))} <b>${l.pts}</b>`; } }
+  ];
+  html += panel('Their games this season', table('t-scout-games', gcols, S.games.slice().reverse(), { sort: 'date', desc: true }), { sub: 'Dates link to the game on basketaki. Score shows their points first.' });
+  html += `<p class="small muted">Automatic analysis of basketaki box scores, refreshed every morning. It only covers ${esc(S.team)}'s ${esc(seasonLabel(S.season))} season; small samples early in the season can swing a lot.</p>`;
+  return html;
+}
+
+const VIEWS = { overview: vOverview, games: vGames, game: vGame, players: vPlayers, player: vPlayer, opponents: vOpponents, opponent: vOpponent, seasons: vSeasons, season: vSeason, team: vTeam, records: vRecords, compare: vCompare, match: vMatch };
+const NAV_OF = { game: 'games', player: 'players', opponent: 'opponents', season: 'seasons', match: 'overview' };
 function route() {
   let h = location.hash.slice(1); try { h = decodeURIComponent(h); } catch (e) { /* keep raw */ }
-  const m = /^(game|player|opponent|season)-(.+)$/.exec(h);
+  const m = /^(game|player|opponent|season|match)-(.+)$/.exec(h);
   if (m) return { view: m[1], arg: m[2] };
   return { view: VIEWS[h] ? h : 'overview' };
 }
@@ -1712,6 +2195,7 @@ function titleFor(r) {
   if (r.view === 'player') { const p = PLBYRID.get(r.arg); return p ? p.disp : ''; }
   if (r.view === 'opponent') { const o = OBYRID.get(r.arg); return o ? 'vs ' + o.name : ''; }
   if (r.view === 'season') { const s = SEASONS.find(x => seasonKey(x) === r.arg); return s ? seasonLabel(s) : ''; }
+  if (r.view === 'match') { const g = UPBYRID.get(r.arg); return g ? 'Preview vs ' + g.opponent : ''; }
   return r.view === 'overview' ? '' : NAV_LABEL[r.view];
 }
 function countUp() {
@@ -1742,6 +2226,8 @@ function render(keep, anim) {
   if (anim) countUp();
 }
 app.addEventListener('click', e => {
+  const cb = e.target.closest('[data-cal]');
+  if (cb) { calMonth = cb.dataset.cal; render(true); return; }
   const sb = e.target.closest('[data-sort]');
   if (sb) {
     const [id, k] = sb.dataset.sort.split('|'); const t = TABLES[id]; if (!t) return;

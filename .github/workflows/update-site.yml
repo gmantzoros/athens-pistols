@@ -1,5 +1,7 @@
 # Keeps the website up to date by itself:
 #  - every morning it scrapes basketaki for new games (Python scraper, standard library only)
+#  - it also reads the schedule: upcoming games, gyms, league table and, for confirmed games,
+#    the opponent's current season (scouting for the match preview)
 #  - if anything changed it saves the new data to the repository
 #  - then it publishes the site/ folder to GitHub Pages
 # It also publishes whenever you push a change, and you can run it any time from the
@@ -45,14 +47,17 @@ jobs:
       - name: Download the latest games from basketaki
         run: python scrape_basketaki.py --out data --site site
 
-      - name: Save new data (only when games or stats changed)
+      - name: Upcoming games, league table and scouting of confirmed opponents
+        run: python scrape_upcoming.py
+
+      - name: Save new data (only when games, stats or upcoming games changed)
         run: |
-          if git diff --quiet -- data/games.csv data/player_stats.csv; then
-            echo "No new games or stat changes."
+          if git diff --quiet -- data/games.csv data/player_stats.csv site/upcoming.js; then
+            echo "No new games, stat changes or schedule changes."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/games.csv data/player_stats.csv data/stats.json site/data.js
+            git add data/games.csv data/player_stats.csv data/stats.json site/data.js site/upcoming.js
             git commit -m "Update stats $(date -u +%Y-%m-%d)"
             git push
           fi
