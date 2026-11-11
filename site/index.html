@@ -299,6 +299,11 @@ footer .gut{padding-block:20px 36px;display:flex;flex-wrap:wrap;gap:6px 18px;jus
 a.cal-day:hover{text-decoration:none;border-color:var(--accent)}
 .cal-day.next{background:var(--accent);color:var(--accent-ink)}
 .cal-day .res{width:17px;height:17px;font-size:10px;border-radius:5px;flex:none}
+.cal-day.won,.cal-legend .lg-won{background:var(--accent-wash);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.cal-day.won .d{color:var(--accent-text);font-weight:700}
+.cal-day.lost,.cal-legend .lg-lost{background:var(--s-loss)}
+.cal-day.lost .d{color:var(--fg);font-weight:700}
+.cal-day.lost .res-L{background:var(--fg);color:var(--bg);box-shadow:none}
 .cal-legend{display:flex;gap:6px 16px;flex-wrap:wrap;font-size:12px;color:var(--muted);align-items:center}
 .cal-legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
 .tlogo{display:inline-grid;place-items:center;border-radius:50%;background:#fff;overflow:hidden;flex:none;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
@@ -1917,12 +1922,13 @@ const HOWTO = [
   { k: 'stl', lab: 'Steals per game', fmt: f1, good: 1, thr: 2 },
   { k: 'blk', lab: 'Blocks per game', fmt: f1, good: 1, thr: 1 }
 ];
+const SIG = 0.75; // share of a measure's threshold that counts as clearly different from the league
 function verdict(h, them, base) {
   if (!isNum(them) || !isNum(base)) return { cls: 'v-avg', txt: 'No data' };
   const d = them - base;
-  if (h.good === 0) return Math.abs(d) >= h.thr ? { cls: 'v-style', txt: d > 0 ? 'High' : 'Low' } : { cls: 'v-avg', txt: 'Average' };
-  if (d * h.good >= h.thr) return { cls: 'v-str', txt: 'Strength' };
-  if (d * h.good <= -h.thr) return { cls: 'v-weak', txt: 'Weakness' };
+  if (h.good === 0) return Math.abs(d) >= h.thr * SIG ? { cls: 'v-style', txt: d > 0 ? 'High' : 'Low' } : { cls: 'v-avg', txt: 'Average' };
+  if (d * h.good >= h.thr * SIG) return { cls: 'v-str', txt: 'Strength' };
+  if (d * h.good <= -h.thr * SIG) return { cls: 'v-weak', txt: 'Weakness' };
   return { cls: 'v-avg', txt: 'Average' };
 }
 function rolesOf(r, teamPts, isTop) {
@@ -1938,10 +1944,15 @@ function rolesOf(r, teamPts, isTop) {
 }
 function playerTip(r) {
   const a = r.a;
+  const cold3 = pg(a, 'fg3a') >= 3 && isNum(a.p3) && a.p3 < 0.25;
   if (pg(a, 'fg3a') >= 3 && a.p3 >= 0.3) return `Close out hard: ${f1(pg(a, 'fg3m'))} threes a game at ${fp0(a.p3)}.`;
-  if (pg(a, 'fg3a') >= 3 && isNum(a.p3) && a.p3 < 0.25) return `Give him the three (${fp0(a.p3)}), take away the drive.`;
+  if (pg(a, 'pts') >= 12 && cold3) return `Give him the three (${fp0(a.p3)}), take away the drive.`;
+  if (pg(a, 'pts') >= 12 && pg(a, 'fg2a') >= 6) return 'Scores inside: wall up and help early.';
   if (pg(a, 'ast') >= 3) return 'Deny him the ball: he runs their offence.';
+  if (pg(a, 'blk') >= 1) return `Use pump fakes near the rim: ${f1(pg(a, 'blk'))} blocks a game.`;
   if (pg(a, 'oreb') >= 2.5) return 'Box him out on every shot.';
+  if (pg(a, 'fg3a') >= 3 && isNum(a.p3) && a.p3 < 0.25) return `Give him the three (${fp0(a.p3)}), take away the drive.`;
+  if (pg(a, 'stl') >= 2) return `Protect the ball around him: ${f1(pg(a, 'stl'))} steals a game.`;
   if (a.fta >= 6 && a.ftp < 0.55) return `Foul rather than give up a layup: ${fp0(a.ftp)} from the line.`;
   if (pg(a, 'fg2a') >= 6) return 'Scores inside: wall up and help early.';
   return 'Keep him off his spots.';
@@ -1980,12 +1991,14 @@ function keyLine(k, strong, M, B) {
 function scoutSummary(S, ctx, rows, regular) {
   const { M, B } = ctx;
   const items = HOWTO.filter(h => h.good && KEYSTAT[h.k] && isNum(M[h.k]) && isNum(B[h.k])).map(h => ({ h, z: (M[h.k] - B[h.k]) * h.good / h.thr }));
-  const str = items.filter(x => x.z >= 1).sort((a, b) => b.z - a.z).slice(0, 3);
-  const weak = items.filter(x => x.z <= -1).sort((a, b) => a.z - b.z).slice(0, 3);
+  const str = items.filter(x => x.z >= SIG).sort((a, b) => b.z - a.z).slice(0, 3);
+  const weak = items.filter(x => x.z <= -SIG).sort((a, b) => a.z - b.z).slice(0, 3);
   const keys = [], used = new Set();
   const teamPts = rows.reduce((t, r) => t + r.a.pts, 0), top = regular[0];
+  const second = regular[1];
   if (top && ratio(top.a.pts, teamPts) >= 0.25) keys.push(`Stop <b>${esc(top.p.disp)}</b>: ${f1(pg(top.a, 'pts'))} points a game, ${fp0(ratio(top.a.pts, teamPts))} of their scoring.`);
-  const ranked = items.filter(x => Math.abs(x.z) >= 1).sort((a, b) => Math.abs(b.z) * (b.h.k === 'efg' ? 0.9 : 1) - Math.abs(a.z) * (a.h.k === 'efg' ? 0.9 : 1));
+  else if (top && second) { const sh2 = ratio(top.a.pts + second.a.pts, teamPts); keys.push(`Main scorers: <b>${esc(top.p.disp)}</b> (${f1(pg(top.a, 'pts'))}) and <b>${esc(second.p.disp)}</b> (${f1(pg(second.a, 'pts'))})${sh2 >= 0.4 ? `, ${fp0(sh2)} of their points` : ''}.`); }
+  const ranked = items.filter(x => Math.abs(x.z) >= SIG).sort((a, b) => Math.abs(b.z) * (b.h.k === 'efg' ? 0.9 : 1) - Math.abs(a.z) * (a.h.k === 'efg' ? 0.9 : 1));
   for (const x of ranked) {
     if (keys.length >= 4) break;
     const k = keyLine(x.h.k, x.z > 0, M, B);
@@ -2024,12 +2037,12 @@ function calendarHTML(month) {
     const iso = `${month}-${String(d).padStart(2, '0')}`, cls = iso === today ? ' today' : '';
     const u = up.get(iso), p = past.get(iso);
     if (u) cells += `<a class="cal-day next${cls}" href="#match-${u.rid}" title="${esc(`vs ${u.opponent}${u.time ? ' · ' + u.time : ''}${u.gym ? ' · ' + u.gym.name : ''}`)}"><span class="d">${d}</span>${tlogo(u.logo, u.opponent, 18)}</a>`;
-    else if (p) { const g = p[p.length - 1]; cells += `<a class="cal-day played${cls}" href="#game-${g.rid}" title="${esc(`vs ${g.opponent} · ${g.result} ${isNum(g.team_score) ? g.team_score + '–' + g.opp_score : ''}`)}"><span class="d">${d}</span><span class="res res-${g.result}">${g.result}</span></a>`; }
+    else if (p) { const g = p[p.length - 1]; cells += `<a class="cal-day played ${g.result === 'W' ? 'won' : 'lost'}${cls}" href="#game-${g.rid}" title="${esc(`vs ${g.opponent} · ${g.result} ${isNum(g.team_score) ? g.team_score + '–' + g.opp_score : ''}`)}"><span class="d">${d}</span><span class="res res-${g.result}">${g.result}</span></a>`; }
     else cells += `<div class="cal-day${cls}"><span class="d">${d}</span></div>`;
   }
   return `<div class="cal"><div class="cal-head"><b>${MONTHS_LONG[m - 1]} ${y}</b><div class="cal-nav"><button type="button" data-cal="${prev}" aria-label="Previous month">‹</button><button type="button" data-cal="${today.slice(0, 7)}" aria-label="This month" class="cal-today">Today</button><button type="button" data-cal="${next}" aria-label="Next month">›</button></div></div>
     <div class="cal-grid">${cells}</div>
-    <div class="cal-legend"><span><i style="background:var(--accent)"></i>Upcoming</span><span><i style="background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line)"></i>Played</span></div></div>`;
+    <div class="cal-legend"><span><i style="background:var(--accent)"></i>Upcoming</span><span><i class="lg-won"></i>Won</span><span><i class="lg-lost"></i>Lost</span></div></div>`;
 }
 function upcomingPanel() {
   if (!UPG.length) return '';
@@ -2041,7 +2054,7 @@ function upcomingPanel() {
     const sr = S ? record(S.games) : null;
     card = `<div class="nextg">
       <div class="ng-top"><p class="eyebrow">Next game${nx.round ? ` · Matchday ${nx.round}` : ''}</p><span class="ng-count">${countdown(nx.date)}</span></div>
-      <div class="ng-vs">${ourLogo(44)}<span class="x">VS</span>${tlogo(nx.logo, nx.opponent, 56)}<div class="n"><b>${esc(nx.opponent)}</b><span>${esc(nx.ci.name)}</span></div></div>
+      <div class="ng-vs">${ourLogo(56)}<span class="x">VS</span>${tlogo(nx.logo, nx.opponent, 56)}<div class="n"><b>${esc(nx.opponent)}</b><span>${esc(nx.ci.name)}</span></div></div>
       <div class="ng-when">${longDay(nx.date)}${nx.time ? ' · ' + esc(nx.time) : ''}</div>
       <div class="ng-gym"><div><b>${esc(nx.gym.name)}</b>${nx.gym.address ? `<br><span>${esc(nx.gym.address)}</span>` : ''}</div><a class="maplink" href="${esc(nx.gym.maps_url)}" target="_blank" rel="noopener">Open in Google Maps ↗</a></div>
       <div class="ng-facts">${sr ? `<span>Their season ${recTxt(sr)}</span>` : ''}${st ? `<span>${ordinal(st.pos)} in the league (${st.w}–${st.l})</span>` : ''}<span>${hh.rAll.n ? `All-time vs them ${recTxt(hh.rAll)}` : 'First ever meeting'}</span></div>
