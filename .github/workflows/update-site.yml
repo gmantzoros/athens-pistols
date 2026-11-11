@@ -1,0 +1,76 @@
+# Keeps the website up to date by itself:
+#  - every morning it scrapes basketaki for new games (Python scraper, standard library only)
+#  - if anything changed it saves the new data to the repository
+#  - then it publishes the site/ folder to GitHub Pages
+# It also publishes whenever you push a change, and you can run it any time from the
+# Actions tab ("Update stats and publish site" -> "Run workflow").
+
+name: Update stats and publish site
+
+on:
+  schedule:
+    - cron: "15 6 * * *"   # every day at 06:15 UTC (08:15 or 09:15 in Athens)
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update-and-publish
+  cancel-in-progress: false
+
+jobs:
+  update:
+    # a push means you changed something yourself: just publish, don't scrape
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Reuse pages downloaded on earlier runs
+        uses: actions/cache@v4
+        with:
+          path: data/cache
+          key: basketaki-pages-${{ github.run_id }}
+          restore-keys: basketaki-pages-
+
+      - name: Download the latest games from basketaki
+        run: python scrape_basketaki.py --out data --site site
+
+      - name: Save new data (only when games or stats changed)
+        run: |
+          if git diff --quiet -- data/games.csv data/player_stats.csv; then
+            echo "No new games or stat changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/games.csv data/player_stats.csv data/stats.json site/data.js
+            git commit -m "Update stats $(date -u +%Y-%m-%d)"
+            git push
+          fi
+
+  publish:
+    needs: update
+    if: always() && (needs.update.result == 'success' || needs.update.result == 'skipped')
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

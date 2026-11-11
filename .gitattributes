@@ -1,0 +1,4 @@
+# store text files with LF line endings so Windows and the GitHub update job agree
+* text=auto
+*.bat text eol=crlf
+*.png binary

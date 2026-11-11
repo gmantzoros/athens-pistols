@@ -1,0 +1,14 @@
+# downloaded web pages (re-created by the scrapers)
+data/cache/
+data_py/cache/
+# second copy of the data made only to cross-check the two scrapers
+data_py/
+data_py_log.txt
+# run logs
+data/scrape_log.txt
+# captured page snapshots from the website check (re-created by verify/extract.js)
+verify/out/
+# local tools
+.claude/
+__pycache__/
+*.pyc

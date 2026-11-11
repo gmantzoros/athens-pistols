@@ -1,0 +1,9 @@
+Website verification report
+===========================
+Snapshots checked: 1066 (compare: 16, finder: 1, game: 191, games: 4, opponent: 99, opponents: 4, overview: 4, player: 76, players: 24, psea: 528, records: 100, season: 11, seasons: 4, team: 4)
+Displayed values compared with an independent recomputation from data/*.csv: 228,239
+Mismatches: 0
+Page errors seen while capturing: 0
+
+
+RESULT: ALL DISPLAYED VALUES MATCH THE DATA

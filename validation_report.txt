@@ -1,0 +1,13 @@
+Comparing data/ (PowerShell scraper) with data_py/ (Python scraper)
+
+== games.csv
+   PowerShell rows: 191   Python rows: 191
+   matched rows: 191   cells compared: 5539   cells different: 0
+   RESULT: IDENTICAL
+
+== player_stats.csv
+   PowerShell rows: 2533   Python rows: 2533
+   matched rows: 2533   cells compared: 70924   cells different: 0
+   RESULT: IDENTICAL
+
+OVERALL: BOTH SCRAPERS PRODUCED IDENTICAL DATA
