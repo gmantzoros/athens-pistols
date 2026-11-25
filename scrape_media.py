@@ -13,6 +13,11 @@ For every played game of the team it reads two tabs of the game's page on basket
 
 basketaki adds photos, reports and videos a few days after a game, so a game is checked again
 on every run for RECHECK_DAYS days after it was played and then marked final and left alone.
+
+Network problems never stop the run. basketaki's picture server refuses connections from GitHub's
+machines, so when a picture can't be downloaded it is listed by its address on basketaki instead
+(the site then loads it from there), and the game is retried on every run until our own copy is
+saved, for example by running this script on a PC that can reach the picture server.
 Everything is stored in site/media.js itself, so a run only fetches pages for recent games,
 only downloads pictures it doesn't have yet, and only rewrites the file when something changed.
 
@@ -50,17 +55,38 @@ except ImportError:  # checked in main() so --help still works
     Image = None
 
 
-def get_bytes(url, delay=0.15):
-    """Download a file; None if it doesn't exist (basketaki's gallery lists files that were never made)."""
-    try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60) as r:
-            data = r.read()
-    except urllib.error.HTTPError as e:
-        if e.code in (403, 404, 410):
-            return None
-        raise
-    time.sleep(delay)
-    return data
+class Unreachable(Exception):
+    """The picture server could not be reached (as opposed to a picture that doesn't exist)."""
+
+
+NET_ERRORS = (urllib.error.URLError, OSError, TimeoutError)   # HTTPError is a URLError
+
+
+BLOCKED = set()   # picture servers that refused us during this run: not tried again until the next run
+
+
+def get_bytes(url, delay=0.15, tries=2):
+    """Download a file; None if it doesn't exist (basketaki's gallery lists files that were never made).
+    Raises Unreachable when the server can't be reached at all, after one retry."""
+    host = urllib.parse.urlsplit(url).netloc
+    if host in BLOCKED:
+        raise Unreachable(f"{host} refused earlier in this run")
+    for attempt in range(tries):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=60) as r:
+                data = r.read()
+            time.sleep(delay)
+            return data
+        except urllib.error.HTTPError as e:
+            if e.code in (403, 404, 410):
+                return None
+            err = e
+        except NET_ERRORS as e:
+            err = e
+        if attempt + 1 < tries:
+            time.sleep(3)
+    BLOCKED.add(host)
+    raise Unreachable(f"{url}: {getattr(err, 'reason', err)}")
 
 
 # ------------------------------------------------------------------ gallery
@@ -94,6 +120,10 @@ def save_picture(data, folder, name):
 
 
 def photos_for(gallery_html, site_dir):
+    """Our own copies of the game's pictures. If basketaki's picture server can't be reached (it refuses
+    GitHub's machines), the picture is listed by its address on basketaki instead ("remote": the visitor's
+    browser loads it from basketaki and tries the next address if one doesn't exist), and the game is
+    checked again on the next run."""
     num, found = gallery_urls(gallery_html)
     out = []
     if not num:
@@ -101,18 +131,26 @@ def photos_for(gallery_html, site_dir):
     folder = site_dir / "media" / num
     for key, remote, caption in KINDS:
         rel, relt = f"media/{num}/{key}.jpg", f"media/{num}/{key}-t.jpg"
+        candidates = sorted(found.get(remote, []), key=lambda u: u.lower().endswith(".png") != (key == "mvp"))
+        size, blocked = None, False
         if (site_dir / rel).exists() and (site_dir / relt).exists():
             with Image.open(site_dir / rel) as im:
                 size = im.size
         else:
-            size = None
-            for url in found.get(remote, []):          # .jpeg and .png are both listed; usually only one exists
-                data = get_bytes(url)
+            for url in candidates:                 # .jpeg and .png are both listed; usually only one exists
+                try:
+                    data = get_bytes(url)
+                except Unreachable as e:
+                    print(f"      picture server unreachable, linking to basketaki instead ({e})")
+                    blocked = True
+                    break
                 if data:
                     size = save_picture(data, folder, key)
                     break
         if size:
             out.append({"kind": key, "caption": caption, "src": rel, "thumb": relt, "w": size[0], "h": size[1]})
+        elif blocked and candidates:
+            out.append({"kind": key, "caption": caption, "remote": True, "srcs": candidates, "w": 1080, "h": 1080})
     return num, out
 
 
@@ -210,16 +248,22 @@ def main():
 
     for i, g in enumerate(todo, 1):
         gid = g["game_id"]
-        num, photos = photos_for(fetch.get(f"/games/{gid}/gallery", use_cache=False), site)
-        art = article_for(fetch.get(f"/games/{gid}/article", use_cache=False))
+        try:
+            num, photos = photos_for(fetch.get(f"/games/{gid}/gallery", use_cache=False), site)
+            art = article_for(fetch.get(f"/games/{gid}/article", use_cache=False))
+        except NET_ERRORS as err:   # a page that won't load: keep what we had and try again next run
+            print(f"[{i:3}/{len(todo)}] {g['date']} {g['opponent'][:28]:<28} skipped, basketaki page did not load ({getattr(err, 'reason', err)})")
+            continue
         age = (today - date.fromisoformat(g["date"])).days
-        e = {"final": age > args.recheck_days}
+        linked = sum(1 for p in photos if p.get("remote"))
+        e = {"final": age > args.recheck_days and not linked}   # games with linked photos keep being retried
         if photos:
             e.update(num=num, photos=photos)
         if art:
             e.update(art, article=f"{BASE}/games/{gid}/article")
         media[gid] = e
-        what = ", ".join(x for x in (f"{len(photos)} photos" if photos else "", "report" if art.get("headline") else "", "video" if art.get("video") else "") if x)
+        what = ", ".join(x for x in (f"{len(photos)} photos" + (f" ({linked} linked to basketaki)" if linked else "") if photos else "",
+                                      "report" if art.get("headline") else "", "video" if art.get("video") else "") if x)
         print(f"[{i:3}/{len(todo)}] {g['date']} {g['opponent'][:28]:<28} {what or 'nothing yet'}")
 
     payload = {"source": BASE, "recheck_days": args.recheck_days, "games": dict(sorted(media.items()))}

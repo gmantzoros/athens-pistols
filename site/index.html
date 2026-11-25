@@ -288,6 +288,7 @@ footer .gut{padding-block:20px 36px;display:flex;flex-wrap:wrap;gap:6px 18px;jus
 .shot{position:relative;display:block;width:100%;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:zoom-in;background:var(--surface-2);aspect-ratio:1;font:inherit}
 .shot img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .shot:hover img{transform:scale(1.04)}
+.shot.broken{display:none}
 .shot span{position:absolute;left:8px;bottom:8px;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,9,8,.66);color:#fff;padding:3px 7px;border-radius:5px;max-width:calc(100% - 16px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vid{position:relative;display:block;width:100%;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#000;border:0;padding:0;cursor:pointer;font:inherit}
 .vid.wide{aspect-ratio:16/9}
@@ -2282,6 +2283,15 @@ function vMatch(arg) {
 const MEDIA = (window.PISTOLS_MEDIA && window.PISTOLS_MEDIA.games) || {};
 const mediaOf = g => (g && g.game_id && MEDIA[g.game_id]) || null;
 const photosOf = g => { const m = mediaOf(g); return (m && m.photos) || []; };
+/* a photo is either our own copy (src, thumb) or, when the daily run couldn't download it, a link to
+   basketaki's picture server with every address it might have (srcs: .jpeg/.png); the browser tries them in turn */
+const photoSrcs = p => p.srcs && p.srcs.length ? p.srcs : [p.src];
+const photoImg = (p, thumb) => { const ss = thumb && p.thumb ? [p.thumb] : photoSrcs(p); return `<img src="${esc(ss[0])}"${ss.length > 1 ? ` data-srcs="${esc(ss.join(' '))}"` : ''} alt="" loading="lazy" width="480" height="480">`; };
+document.addEventListener('error', e => {   // image failed: try its next address, or hide the tile if none work
+  const im = e.target; if (!im || im.tagName !== 'IMG' || !im.dataset.srcs) return;
+  const ss = im.dataset.srcs.split(' '), k = ss.indexOf(im.getAttribute('src'));
+  if (k >= 0 && k < ss.length - 1) im.src = ss[k + 1]; else { delete im.dataset.srcs; const sh = im.closest('.shot'); if (sh && !sh.closest('.lb')) sh.classList.add('broken'); }
+}, true);
 const photoCap = (p, g) => p.kind === 'winners' ? (g.result === 'W' ? `Winners: ${TEAM}` : g.result === 'L' ? `Winners: ${g.opponent}` : 'Winners') : p.caption;
 const resultTxt = g => g.decided && isNum(g.team_score) ? ` · ${g.result === 'W' ? 'Won' : 'Lost'} ${g.team_score}–${g.opp_score}` : '';
 const ICON = {
@@ -2293,7 +2303,7 @@ const ICON = {
 /* photo viewer groups, rebuilt on every render: data-lb="<group>|<index>" opens the viewer */
 let LBG = {};
 function lbGroup(items) { const id = 'g' + Object.keys(LBG).length; LBG[id] = items; return id; }
-const photoItem = (p, g, withLink) => ({ src: p.src, alt: `${photoCap(p, g)}, ${vsTxt(g)}, ${fdate(g.date, 1)}`,
+const photoItem = (p, g, withLink) => ({ src: photoSrcs(p)[0], srcs: photoSrcs(p), alt: `${photoCap(p, g)}, ${vsTxt(g)}, ${fdate(g.date, 1)}`,
   cap: `<span><b>${esc(photoCap(p, g))}</b> · ${esc(vsTxt(g))} · ${fdate(g.date, 1)}${resultTxt(g)}</span>${withLink ? `<a href="#game-${g.rid}">Open the game: box score, report and video →</a>` : ''}` });
 function videoBox(v, g) {
   return `<button type="button" class="vid${v.vertical === false ? ' wide' : ''}" data-yt="${esc(v.id)}" aria-label="Play the game recap video" title="${esc(v.title || 'Game recap')}">
@@ -2306,7 +2316,7 @@ function mediaPanel(g) {
   if (!ph.length && !m.video && !m.headline) return '';
   const grp = ph.length ? lbGroup(ph.map(p => photoItem(p, g, false))) : '';
   const report = m.headline ? `<div class="report"><p class="eyebrow" style="margin:0">Game report</p><p class="report-h">${esc(m.headline)}</p>${m.excerpt ? `<p>${esc(m.excerpt)}</p>` : ''}${m.article ? `<a href="${esc(m.article)}" target="_blank" rel="noopener">${m.excerpt ? 'Read the full report on basketaki' : 'This game on basketaki'} ↗</a>` : ''}</div>` : '';
-  const shots = ph.length ? `<div class="shots">${ph.map((p, i) => `<button type="button" class="shot" data-lb="${grp}|${i}" aria-label="Open photo: ${esc(photoCap(p, g))}"><img src="${esc(p.thumb)}" alt="" loading="lazy" width="480" height="480"><span>${esc(photoCap(p, g))}</span></button>`).join('')}</div>` : '';
+  const shots = ph.length ? `<div class="shots">${ph.map((p, i) => `<button type="button" class="shot" data-lb="${grp}|${i}" aria-label="Open photo: ${esc(photoCap(p, g))}">${photoImg(p, true)}<span>${esc(photoCap(p, g))}</span></button>`).join('')}</div>` : '';
   const vid = m.video ? videoBox(m.video, g) : '';
   const credit = ph.length ? `Photos, report and video by <a href="https://www.basketaki.com/games/${encodeURIComponent(g.game_id)}/gallery" target="_blank" rel="noopener">basketaki.com</a>. Tap a photo to see it full size.` : 'Report and video by basketaki.com.';
   return panel('Photos and video', `<div class="media${vid ? (m.video.vertical === false ? ' wide' : '') : ' novid'}"><div class="media-main">${report}${shots}</div>${vid}</div><p class="credit">${credit}</p>`);
@@ -2326,7 +2336,7 @@ function vPhotos() {
   const grp = lbGroup(items);
   const card = g => {
     const ph = photosOf(g), m = mediaOf(g), cover = ph.find(p => p.kind === 'start') || ph[0];
-    return `<article class="mcard"><button type="button" class="shot" data-lb="${grp}|${first.get(g) + ph.indexOf(cover)}" aria-label="Photos of ${esc(vsTxt(g))}, ${fdate(g.date, 1)}"><img src="${esc(cover.thumb)}" alt="" loading="lazy" width="480" height="480"><span>${plural(ph.length, 'photo')}${m.video ? ' · video' : ''}</span></button>
+    return `<article class="mcard"><button type="button" class="shot" data-lb="${grp}|${first.get(g) + ph.indexOf(cover)}" aria-label="Photos of ${esc(vsTxt(g))}, ${fdate(g.date, 1)}">${photoImg(cover, true)}<span>${plural(ph.length, 'photo')}${m.video ? ' · video' : ''}</span></button>
       <a class="mcard-b" href="#game-${g.rid}"><span class="d"><span>${fdate(g.date, 1)}</span><span>${esc(g.ci.short)}</span></span><b>${esc(vsTxt(g))}</b><span class="r">${resBadge(g)} ${scoreTxt(g)}</span></a></article>`;
   };
   const seasons = [...new Set(games.map(g => g.season))];
@@ -2368,6 +2378,7 @@ function lbInit() {
 }
 function lbShow() {
   const it = LB.list[LB.i], n = LB.list.length;
+  if (it.srcs && it.srcs.length > 1) LB.img.dataset.srcs = it.srcs.join(' '); else delete LB.img.dataset.srcs;
   LB.img.src = it.src; LB.img.alt = it.alt;
   LB.cap.innerHTML = `${it.cap}<small>${LB.i + 1} of ${n}</small>`;
   LB.el.querySelector('.lb-prev').disabled = LB.i === 0;
@@ -2645,7 +2656,7 @@ function vMethod() {
       ${defs([
         ['What there is', `Right now: ${L(plural(withPh.length, 'game'))} with photos (${L(plural(nPhotos, 'photo'))}${withPh.length ? `, the first from ${fdate(withPh[0].date, 1)}` : ''}), ${L(plural(nReport, 'game report'))} and ${L(plural(nVideo, 'recap video'))}. basketaki publishes photos from the 2023–24 season on, recap videos from 2026–27, and written reports for games back to 2019.`],
         ['Which pictures', 'The line-up photo before tip-off, the winning team’s photo (whichever team won) and the MVP card. The stats card is skipped because the site already shows those stats, and so is the half-time card that only some games have.'],
-        ['Stored copies', 'Each picture is saved with the site as a 1080-pixel copy (about 180 KB) and a 480-pixel preview (about 45 KB). The originals are 1–2.5 MB each and are not kept. Smaller copies keep pages fast on a phone, and the pictures stay on the site even if basketaki removes them.'],
+        ['Stored copies', 'Each picture is saved with the site as a 1080-pixel copy (about 180 KB) and a 480-pixel preview (about 45 KB). The originals are 1–2.5 MB each and are not kept. Smaller copies keep pages fast on a phone, and the pictures stay on the site even if basketaki removes them. basketaki’s picture server refuses connections from the machines GitHub uses for the morning update, so when a picture can’t be copied the site shows it straight from basketaki instead (your browser can reach it) and the game is retried every morning.'],
         ['When they appear', `basketaki adds photos, reports and videos a few days after a game, so every game is checked again each morning for ${L(recheck)} days after it is played and then left alone.`],
         ['Reports', 'The headline and the first paragraph (about 320 characters), with a link to the full report on basketaki. The reports are basketaki’s articles, so the site doesn’t copy them in full. They are in Greek, as basketaki writes them.'],
         ['Videos', 'basketaki’s game recap from the Basketaki The League channel on YouTube. The page shows YouTube’s preview picture, and the YouTube player only loads when you press play (in YouTube’s privacy-enhanced mode).'],
